@@ -1,12 +1,41 @@
-<aside class="col-md-3">
-  <!--   SIDEBAR   -->
-  <ul class="list-group">
-    <a class="list-group-item {% if '/accounts/' == request.path %}active{% endif %}" href="{% url 'dashboard' %}"> Dashboard </a>
-    <a class="list-group-item {% if '/my_orders/' in request.path %}active{% endif %}" href="{% url 'my_orders' %}"> My Orders </a>
-    <a class="list-group-item {% if '/edit_profile/' in request.path %}active{% endif %}" href="{% url 'edit_profile' %}"> Edit Profile </a>
-    <a class="list-group-item {% if '/change_password/' in request.path %}active{% endif %}" href="{% url 'change_password' %}"> Change Password </a>
+<aside style="width: 25%; padding: 0 15px; box-sizing: border-box;">
+
+  <!-- SIDEBAR -->
+  <ul style="list-style: none; padding: 0; margin: 0; border: 1px solid #e0e0e0; border-radius: 6px; overflow: hidden;">
+
+    <a href="{% url 'dashboard' %}"
+       style="display: block; padding: 12px 16px; text-decoration: none; font-size: 14px; border-bottom: 1px solid #e0e0e0;
+              {% if '/accounts/' == request.path %}background: #007bff; color: #fff;{% else %}color: #333; background: #fff;{% endif %}">
+      Dashboard
+    </a>
+
+    <a href="{% url 'my_orders' %}"
+       style="display: block; padding: 12px 16px; text-decoration: none; font-size: 14px; border-bottom: 1px solid #e0e0e0;
+              {% if '/my_orders/' in request.path %}background: #007bff; color: #fff;{% else %}color: #333; background: #fff;{% endif %}">
+      My Orders
+    </a>
+
+    <a href="{% url 'edit_profile' %}"
+       style="display: block; padding: 12px 16px; text-decoration: none; font-size: 14px; border-bottom: 1px solid #e0e0e0;
+              {% if '/edit_profile/' in request.path %}background: #007bff; color: #fff;{% else %}color: #333; background: #fff;{% endif %}">
+      Edit Profile
+    </a>
+
+    <a href="{% url 'change_password' %}"
+       style="display: block; padding: 12px 16px; text-decoration: none; font-size: 14px;
+              {% if '/change_password/' in request.path %}background: #007bff; color: #fff;{% else %}color: #333; background: #fff;{% endif %}">
+      Change Password
+    </a>
+
   </ul>
+
   <br>
-  <a class="btn btn-light btn-block" href="{% url 'logout' %}"> <i class="fa fa-power-off"></i> <span class="text">Log out</span> </a>
-  <!--   SIDEBAR .//END   -->
+
+  <a href="{% url 'logout' %}"
+     style="display: block; width: 100%; padding: 10px 16px; background: #f8f9fa; color: #333; border: 1px solid #ddd;
+            border-radius: 4px; text-align: center; text-decoration: none; font-size: 14px; box-sizing: border-box;">
+    <i class="fa fa-power-off"></i> <span>Log out</span>
+  </a>
+  <!-- SIDEBAR .//END -->
+
 </aside>

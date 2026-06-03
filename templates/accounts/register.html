@@ -1,63 +1,73 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 
-<section class="section-content padding-y">
+<section style="padding-top: 40px; padding-bottom: 40px;">
 
-<!-- ============================ COMPONENT REGISTER   ================================= -->
-	<div class="card mx-auto" style="max-width:520px; margin-top:40px;">
-      <article class="card-body">
-    {% include 'includes/alerts.html' %}
-		<header class="mb-4"><h4 class="card-title">Sign up</h4></header>
-		<form action="{% url 'register' %}" method="POST">
-      {% csrf_token %}
+  <div style="max-width: 520px; margin: 40px auto; border: 1px solid #dee2e6; border-radius: 6px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.07);">
+    <article style="padding: 24px 32px;">
 
+      {% include 'includes/alerts.html' %}
 
-				<div class="form-row">
-					<div class="col form-group">
-						<label>First name</label>
-					  	{{ form.first_name }}
-					</div> <!-- form-group end.// -->
-					<div class="col form-group">
-						<label>Last name</label>
-					  	{{ form.last_name }}
-					</div> <!-- form-group end.// -->
-				</div> <!-- form-row end.// -->
+      <header style="margin-bottom: 24px;">
+        <h4 style="margin: 0; font-size: 1.25rem; font-weight: 600;">Sign up</h4>
+      </header>
 
+      <form action="{% url 'register' %}" method="POST">
+        {% csrf_token %}
 
-				<div class="form-row">
-					<div class="form-group col-md-6">
-					  <label>Email Address</label>
-					  {{form.email}}
-					</div> <!-- form-group end.// -->
-					<div class="form-group col-md-6">
-					  <label>Phone Number</label>
-					  {{form.phone_number}}
-					</div> <!-- form-group end.// -->
-				</div> <!-- form-row.// -->
-				<div class="form-row">
-					<div class="form-group col-md-6">
-						<label>Create password</label>
-					    {{ form.password }}
-					</div> <!-- form-group end.// -->
-					<div class="form-group col-md-6">
-						<label>Repeat password</label>
-            {{form.confirm_password}}
-					</div> <!-- form-group end.// -->
-				</div>
-			    <div class="form-group">
-			        <button type="submit" class="btn btn-primary btn-block"> Register  </button>
-			    </div> <!-- form-group// -->
-      {{ form.email.errors }}
-      {{ form.non_field_errors }}
-			</form>
-		</article><!-- card-body.// -->
-    </div> <!-- card .// -->
-    <p class="text-center mt-4">Have an account? <a href="{% url 'login' %}">Log In</a></p>
-    <br><br>
-<!-- ============================ COMPONENT REGISTER  END.// ================================= -->
+        <!-- First name / Last name row -->
+        <div style="display: flex; gap: 16px; margin-bottom: 4px;">
+          <div style="flex: 1; margin-bottom: 16px;">
+            <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">First name</label>
+            {{ form.first_name }}
+          </div>
+          <div style="flex: 1; margin-bottom: 16px;">
+            <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">Last name</label>
+            {{ form.last_name }}
+          </div>
+        </div>
 
+        <!-- Email / Phone row -->
+        <div style="display: flex; gap: 16px; margin-bottom: 4px;">
+          <div style="flex: 1; margin-bottom: 16px;">
+            <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">Email Address</label>
+            {{ form.email }}
+          </div>
+          <div style="flex: 1; margin-bottom: 16px;">
+            <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">Phone Number</label>
+            {{ form.phone_number }}
+          </div>
+        </div>
+
+        <!-- Password / Confirm Password row -->
+        <div style="display: flex; gap: 16px; margin-bottom: 4px;">
+          <div style="flex: 1; margin-bottom: 16px;">
+            <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">Create password</label>
+            {{ form.password }}
+          </div>
+          <div style="flex: 1; margin-bottom: 16px;">
+            <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">Repeat password</label>
+            {{ form.confirm_password }}
+          </div>
+        </div>
+
+        <!-- Submit button -->
+        <div style="margin-bottom: 16px;">
+          <button type="submit" style="width: 100%; padding: 10px; background-color: #0d6efd; color: #fff; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer;">
+            Register
+          </button>
+        </div>
+
+        {{ form.email.errors }}
+        {{ form.non_field_errors }}
+
+      </form>
+    </article>
+  </div>
+
+  <p style="text-align: center; margin-top: 16px;">Have an account? <a href="{% url 'login' %}">Log In</a></p>
+  <br><br>
 
 </section>
 

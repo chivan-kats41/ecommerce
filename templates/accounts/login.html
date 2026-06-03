@@ -1,51 +1,56 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 
-<section class="section-conten padding-y" style="min-height:84vh">
+<section style="min-height: 84vh; padding-top: 40px; padding-bottom: 40px;">
 
-<!-- ============================ COMPONENT LOGIN   ================================= -->
+  {% if request.GET.command == 'verification' %}
 
-{% if request.GET.command == 'verification' %}
+    <div style="max-width: 1024px; margin: 100px auto 0; padding: 16px 20px; background-color: #d1ecf1; border: 1px solid #bee5eb; border-radius: 4px; color: #0c5460; text-align: center;">
+      Thank you for registering with us. We have sent you a verification email to your email address [{{ request.GET.email }}]
+      <br><br>
+      Already verified? <a href="{% url 'login' %}" style="color: #0c5460; font-weight: 600;">Login</a>
+    </div>
 
-<div class="container mx-auto alert alert-info text-center" role="alert" style="max-width: 1024px; margin-top:100px;">
-Thank you for registering with us. We have sent you a verification email to your email address [{{ request.GET.email }}]
-<br><br>
-Already verified? <a href="{% url 'login' %}">Login</a>
-</div>
+  {% else %}
 
-{% else %}
+    <div style="max-width: 380px; margin: 100px auto 0; border: 1px solid #dee2e6; border-radius: 6px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.07);">
+      <div style="padding: 24px 32px;">
 
-	<div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
+        <h4 style="margin: 0 0 20px; font-size: 1.25rem; font-weight: 600;">Sign in</h4>
 
-      <div class="card-body">
-      <h4 class="card-title mb-4">Sign in</h4>
-      {% include 'includes/alerts.html' %}
-      <form action="{% url 'login' %}" method="POST">
-        {% csrf_token %}
-          <div class="form-group">
-			 <input type="email" class="form-control" placeholder="Email Address" name="email">
-          </div> <!-- form-group// -->
-          <div class="form-group">
-			<input type="password" class="form-control" placeholder="Password" name="password">
-          </div> <!-- form-group// -->
+        {% include 'includes/alerts.html' %}
 
-          <div class="form-group">
-          	<a href="{% url 'forgotPassword' %}" class="float-right">Forgot password?</a>
+        <form action="{% url 'login' %}" method="POST">
+          {% csrf_token %}
 
-          </div> <!-- form-group form-check .// -->
-          <div class="form-group">
-              <button type="submit" class="btn btn-primary btn-block"> Login  </button>
-          </div> <!-- form-group// -->
-      </form>
-      </div> <!-- card-body.// -->
-    </div> <!-- card .// -->
+          <div style="margin-bottom: 16px;">
+            <input type="email" style="width: 100%; padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; font-size: 1rem; box-sizing: border-box; outline: none;" placeholder="Email Address" name="email">
+          </div>
 
-     <p class="text-center mt-4">Don't have account? <a href="{% url 'register' %}">Sign up</a></p>
-     <br><br>
-<!-- ============================ COMPONENT LOGIN  END.// ================================= -->
-{% endif %}
+          <div style="margin-bottom: 16px;">
+            <input type="password" style="width: 100%; padding: 8px 12px; border: 1px solid #ced4da; border-radius: 4px; font-size: 1rem; box-sizing: border-box; outline: none;" placeholder="Password" name="password">
+          </div>
+
+          <div style="margin-bottom: 16px; text-align: right;">
+            <a href="{% url 'forgotPassword' %}" style="font-size: 0.9rem; color: #0d6efd; text-decoration: none;">Forgot password?</a>
+          </div>
+
+          <div style="margin-bottom: 8px;">
+            <button type="submit" style="width: 100%; padding: 10px; background-color: #0d6efd; color: #fff; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer;">
+              Login
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <p style="text-align: center; margin-top: 16px;">Don't have account? <a href="{% url 'register' %}" style="color: #0d6efd; text-decoration: none;">Sign up</a></p>
+    <br><br>
+
+  {% endif %}
 
 </section>
+
 {% endblock %}

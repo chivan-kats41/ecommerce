@@ -1,82 +1,100 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 
-<section class="section-conten padding-y bg">
+<section style="padding-top: 40px; padding-bottom: 40px; background-color: #f8f9fa;">
 
-{% include 'includes/alerts.html' %}
-<div class="container">
-	<div class="row">
-	{% include 'includes/dashboard_sidebar.html' %}
-	<main class="col-md-9">
-		<article class="card">
-		<header class="card-header">
-			<strong class="d-inline-block mr-3">Edit your profile</strong>
+  {% include 'includes/alerts.html' %}
 
-		</header>
-		<div class="card-body">
-			<div class="text-right">
-				<img src="{{userprofile.profile_picture.url}}" alt="Profile Picture" width="100" style="border-radius:50px;">
-			</div>
-			<div class="row">
-			<div class="col-md-12">
-				<form action="{% url 'edit_profile' %}" method="POST" enctype="multipart/form-data">
-					{% csrf_token %}
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							<label>First Name</label>
-							{{user_form.first_name}}
-						</div>
-						<div class="form-group col-md-6">
-							<label>Last Name</label>
-							{{user_form.last_name}}
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							<label>Phone Number</label>
-							{{user_form.phone_number}}
-						</div>
-						<div class="form-group col-md-6">
-							<label>Profile Picture</label>
-							{{profile_form.profile_picture}}
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Address Line 1</label>
-						{{profile_form.address_line_1}}
-					</div>
-					<div class="form-group">
-						<label>Address Line 2</label>
-						{{profile_form.address_line_2}}
-					</div>
-					<div class="form-row">
-						<div class="form-group col-md-4">
-							<label>City</label>
-							{{profile_form.city}}
-						</div>
-						<div class="form-group col-md-4">
-							<label>State</label>
-							{{profile_form.state}}
-						</div>
-						<div class="form-group col-md-4">
-							<label>Country</label>
-							{{profile_form.country}}
-						</div>
-					</div>
-					<input type="submit" value="Save" class="btn btn-primary">
-				</form>
-			</div>
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 15px;">
+    <div style="display: flex; flex-wrap: wrap; margin: 0 -15px;">
 
-			</div> <!-- row.// -->
-		</div> <!-- card-body .// -->
+      {% include 'includes/dashboard_sidebar.html' %}
 
-		</article> <!-- order-group.// -->
-	</main>
-</div> <!-- row.// -->
-</div>
+      <main style="flex: 0 0 75%; max-width: 75%; padding: 0 15px; box-sizing: border-box;">
+        <article style="border: 1px solid #dee2e6; border-radius: 6px; background: #fff;">
 
+          <header style="padding: 12px 16px; background-color: #f7f7f7; border-bottom: 1px solid #dee2e6; border-radius: 6px 6px 0 0;">
+            <strong style="display: inline-block; margin-right: 12px;">Edit your profile</strong>
+          </header>
+
+          <div style="padding: 16px;">
+
+            <!-- Profile Picture -->
+            <div style="text-align: right; margin-bottom: 16px;">
+              <img src="{{userprofile.profile_picture.url}}" alt="Profile Picture" width="100" style="border-radius: 50px;">
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap;">
+              <div style="width: 100%; box-sizing: border-box;">
+
+                <form action="{% url 'edit_profile' %}" method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+
+                  <!-- First Name / Last Name -->
+                  <div style="display: flex; gap: 16px; margin-bottom: 4px;">
+                    <div style="flex: 1; margin-bottom: 16px;">
+                      <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">First Name</label>
+                      {{user_form.first_name}}
+                    </div>
+                    <div style="flex: 1; margin-bottom: 16px;">
+                      <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">Last Name</label>
+                      {{user_form.last_name}}
+                    </div>
+                  </div>
+
+                  <!-- Phone Number / Profile Picture -->
+                  <div style="display: flex; gap: 16px; margin-bottom: 4px;">
+                    <div style="flex: 1; margin-bottom: 16px;">
+                      <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">Phone Number</label>
+                      {{user_form.phone_number}}
+                    </div>
+                    <div style="flex: 1; margin-bottom: 16px;">
+                      <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">Profile Picture</label>
+                      {{profile_form.profile_picture}}
+                    </div>
+                  </div>
+
+                  <!-- Address Line 1 -->
+                  <div style="margin-bottom: 16px;">
+                    <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">Address Line 1</label>
+                    {{profile_form.address_line_1}}
+                  </div>
+
+                  <!-- Address Line 2 -->
+                  <div style="margin-bottom: 16px;">
+                    <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">Address Line 2</label>
+                    {{profile_form.address_line_2}}
+                  </div>
+
+                  <!-- City / State / Country -->
+                  <div style="display: flex; gap: 16px; margin-bottom: 4px;">
+                    <div style="flex: 1; margin-bottom: 16px;">
+                      <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">City</label>
+                      {{profile_form.city}}
+                    </div>
+                    <div style="flex: 1; margin-bottom: 16px;">
+                      <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">State</label>
+                      {{profile_form.state}}
+                    </div>
+                    <div style="flex: 1; margin-bottom: 16px;">
+                      <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">Country</label>
+                      {{profile_form.country}}
+                    </div>
+                  </div>
+
+                  <input type="submit" value="Save" style="padding: 10px 24px; background-color: #0d6efd; color: #fff; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer;">
+
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </article>
+      </main>
+
+    </div>
+  </div>
 
 </section>
 

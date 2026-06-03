@@ -1,198 +1,207 @@
 {% extends 'base.html' %}
 {% load static %}
 
+<style>
+  .rate-wrap input[type="radio"] { display: none; }
+  .rate-wrap label { color: #ddd; cursor: pointer; }
+  .rate-wrap input[type="radio"]:checked ~ label,
+  .rate-wrap label:hover,
+  .rate-wrap label:hover ~ label { color: #f0ad4e; }
+  .rate-wrap { display: flex; flex-direction: row-reverse; justify-content: flex-end; font-size: 28px; gap: 2px; }
+</style>
+
 {% block content %}
 
-<section class="section-content padding-y bg">
-	<div class="container">
+<section style="padding: 40px 0; background: #f8f9fa;">
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 15px;">
 
-		<!-- ============================ COMPONENT 1 ================================= -->
-		<div class="card">
-			<div class="row no-gutters">
-				<aside class="col-md-6">
-					<article class="gallery-wrap">
-						<div class="img-big-wrap mainImage">
-							<center><img src="{{ single_product.images.url }}"></center>
-						</div> <!-- img-big-wrap.// -->
+    <!-- PRODUCT CARD -->
+    <div style="background: #fff; border: 1px solid #dee2e6; border-radius: 6px; overflow: hidden;">
+      <div style="display: flex; flex-wrap: wrap;">
 
-					</article> <!-- gallery-wrap .end// -->
-					<ul class="thumb">
-						<li>
-							<a href="{{ single_product.images.url }}" target="mainImage"><img src="{{ single_product.images.url }}" alt="Product Image"></a>
-							{% for i in product_gallery %}
-							<a href="{{i.image.url}}" target="mainImage"><img src="{{i.image.url}}" alt="Product Image"></a>
-							{% endfor %}
-						</li>
-					</ul>
-				</aside>
-				<main class="col-md-6 border-left">
+        <!-- LEFT: Images -->
+        <aside style="flex: 0 0 50%; max-width: 50%; padding: 20px; box-sizing: border-box;">
+          <div style="text-align: center; margin-bottom: 12px;">
+            <img src="{{ single_product.images.url }}" style="max-width: 100%; max-height: 380px; object-fit: contain;">
+          </div>
+          <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px;">
+            <li style="display: flex; flex-wrap: wrap; gap: 8px;">
+              <a href="{{ single_product.images.url }}" target="mainImage">
+                <img src="{{ single_product.images.url }}" alt="Product Image" style="width: 60px; height: 60px; object-fit: cover; border: 1px solid #dee2e6; border-radius: 4px;">
+              </a>
+              {% for i in product_gallery %}
+              <a href="{{ i.image.url }}" target="mainImage">
+                <img src="{{ i.image.url }}" alt="Product Image" style="width: 60px; height: 60px; object-fit: cover; border: 1px solid #dee2e6; border-radius: 4px;">
+              </a>
+              {% endfor %}
+            </li>
+          </ul>
+        </aside>
 
-					<form action="{% url 'add_cart' single_product.id %}" method="POST">
-						{% csrf_token %}
-						<article class="content-body">
+        <!-- RIGHT: Product Info -->
+        <main style="flex: 0 0 50%; max-width: 50%; padding: 20px; box-sizing: border-box; border-left: 1px solid #dee2e6;">
+          <form action="{% url 'add_cart' single_product.id %}" method="POST">
+            {% csrf_token %}
+            <article>
 
-							<h2 class="title">{{ single_product.product_name }}</h2>
-							<div class="rating-star">
-								<span>
-									<i class="fa fa-star{% if single_product.averageReview < 0.5 %}-o{% elif single_product.averageReview >= 0.5 and single_product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
-									<i class="fa fa-star{% if single_product.averageReview < 1.5 %}-o{% elif single_product.averageReview >= 1.5 and single_product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
-									<i class="fa fa-star{% if single_product.averageReview < 2.5 %}-o{% elif single_product.averageReview >= 2.5 and single_product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
-									<i class="fa fa-star{% if single_product.averageReview < 3.5 %}-o{% elif single_product.averageReview >= 3.5 and single_product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
-									<i class="fa fa-star{% if single_product.averageReview < 4.5 %}-o{% elif single_product.averageReview >= 4.5 and single_product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
-	<span>{{single_product.countReview}} reviews</span>
-									</span>
-							</div>
+              <h2 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 10px;">{{ single_product.product_name }}</h2>
 
+              <!-- Star Rating -->
+              <div style="margin-bottom: 12px; color: #f0ad4e; font-size: 16px;">
+                <span>
+                  <i class="fa fa-star{% if single_product.averageReview < 0.5 %}-o{% elif single_product.averageReview >= 0.5 and single_product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 1.5 %}-o{% elif single_product.averageReview >= 1.5 and single_product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 2.5 %}-o{% elif single_product.averageReview >= 2.5 and single_product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 3.5 %}-o{% elif single_product.averageReview >= 3.5 and single_product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 4.5 %}-o{% elif single_product.averageReview >= 4.5 and single_product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                  <span style="font-size: 13px; color: #6c757d; margin-left: 4px;">{{ single_product.countReview }} reviews</span>
+                </span>
+              </div>
 
-							<div class="mb-3">
-								<var class="price h4">$ {{single_product.price}}</var>
-							</div>
+              <!-- Price -->
+              <div style="margin-bottom: 16px;">
+                <var style="font-size: 1.4rem; font-weight: 700; font-style: normal; color: #212529;">$ {{ single_product.price }}</var>
+              </div>
 
-							<p>{{ single_product.description }}</p>
+              <p style="color: #495057; margin-bottom: 16px;">{{ single_product.description }}</p>
 
+              <hr style="border: 0; border-top: 1px solid #dee2e6; margin: 16px 0;">
 
-							<hr>
-							<div class="row">
-								<div class="item-option-select">
-									<h6>Choose Color</h6>
-									<select name="color" class="form-control" required>
-										<option value="" disabled selected>Select</option>
-										{% for i in single_product.variation_set.colors %}
-										<option value="{{ i.variation_value | lower }}">{{ i.variation_value | capfirst }}</option>
-										{% endfor %}
-									</select>
-								</div>
-							</div>
-							<div class="row">
-								<div class="item-option-select">
-									<h6>Select Size</h6>
-									<select name="size" class="form-control" required>
-										<option value="" disabled selected>Select</option>
-										{% for i in single_product.variation_set.sizes %}
-										<option value="{{ i.variation_value | lower }}">{{ i.variation_value | capfirst }}</option>
-										{% endfor %}
-									</select>
-								</div>
-							</div>
-							<hr>
-							{% if single_product.stock <= 0 %}
-							<h5 class="text-danger">Out of Stock</h5>
-							{% else %}
-							<button type="submit" class="btn  btn-primary"> <span class="text">Add to Cart</span> <i class="fa fa-shopping-cart"></i> </button>
-							{% endif %}
-						</article> <!-- product-info-aside .// -->
-					</form>
-				</main> <!-- col.// -->
-			</div> <!-- row.// -->
-		</div> <!-- card.// -->
-		<!-- ============================ COMPONENT 1 END .// ================================= -->
+              <!-- Color Select -->
+              <div style="margin-bottom: 16px;">
+                <h6 style="font-size: 14px; font-weight: 600; margin-bottom: 6px;">Choose Color</h6>
+                <select name="color" required style="display: block; width: 100%; padding: 6px 12px; font-size: 14px; border: 1px solid #ced4da; border-radius: 4px; background: #fff;">
+                  <option value="" disabled selected>Select</option>
+                  {% for i in single_product.variation_set.colors %}
+                  <option value="{{ i.variation_value|lower }}">{{ i.variation_value|capfirst }}</option>
+                  {% endfor %}
+                </select>
+              </div>
 
-		<br>
+              <!-- Size Select -->
+              <div style="margin-bottom: 16px;">
+                <h6 style="font-size: 14px; font-weight: 600; margin-bottom: 6px;">Select Size</h6>
+                <select name="size" required style="display: block; width: 100%; padding: 6px 12px; font-size: 14px; border: 1px solid #ced4da; border-radius: 4px; background: #fff;">
+                  <option value="" disabled selected>Select</option>
+                  {% for i in single_product.variation_set.sizes %}
+                  <option value="{{ i.variation_value|lower }}">{{ i.variation_value|capfirst }}</option>
+                  {% endfor %}
+                </select>
+              </div>
 
-		<div class="row">
-			<div class="col-md-9">
+              <hr style="border: 0; border-top: 1px solid #dee2e6; margin: 16px 0;">
 
+              {% if single_product.stock <= 0 %}
+              <h5 style="color: #dc3545; font-size: 1rem;">Out of Stock</h5>
+              {% else %}
+              <button type="submit" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: #007bff; color: #fff; border: none; border-radius: 4px; font-size: 15px; cursor: pointer;">
+                <span>Add to Cart</span>
+                <i class="fa fa-shopping-cart"></i>
+              </button>
+              {% endif %}
 
+            </article>
+          </form>
+        </main>
 
-				<form action="{% url 'submit_review' single_product.id %}" method="POST">
-					{% csrf_token %}
-					<h5>Write Your Review</h5>
+      </div>
+    </div>
+    <!-- END PRODUCT CARD -->
 
-					<div>
-						<!-- Rating stars -->
-						<label>How do you rate this product?</label>
-						<br>
-						<div class="rate">
-							<input type="radio" name="rating" id="rating10" value="5" required /><label for="rating10" title="5"></label>
-							<input type="radio" name="rating" id="rating9" value="4.5" required /><label for="rating9" title="4.5" class="half"></label>
-							<input type="radio" name="rating" id="rating8" value="4" required /><label for="rating8" title="4"></label>
-							<input type="radio" name="rating" id="rating7" value="3.5" required /><label for="rating7" title="3.5" class="half"></label>
-							<input type="radio" name="rating" id="rating6" value="3" required /><label for="rating6" title="3"></label>
-							<input type="radio" name="rating" id="rating5" value="2.5" required /><label for="rating5" title="2.5" class="half"></label>
-							<input type="radio" name="rating" id="rating4" value="2" required /><label for="rating4" title="2"></label>
-							<input type="radio" name="rating" id="rating3" value="1.5" required /><label for="rating3" title="1.5" class="half"></label>
-							<input type="radio" name="rating" id="rating2" value="1" required /><label for="rating2" title="1"></label>
-							<input type="radio" name="rating" id="rating1" value="0.5" required /><label for="rating1" title="0.5" class="half"></label>
-						</div>
-<br>
-						Review Title:
-						<input type="text" class="form-control" name="subject">
-						<br>
-						Review:
-						<textarea name="review" rows="4" class="form-control"></textarea>
-						<br>
-						<!-- {% if user.is_authenticated %}
-							{% if orderproduct %}
-								<input type="submit" value="Submit Review" class="btn btn-primary">
-							{% else %}
-								<p>You must purchase this product to post a review.</p>
-							{% endif %}
-						{% else %}
-						<p>You must be logged in to post a review. <span><a href="{% url 'login' %}">Login now</a></span></p>
-						{% endif %} -->
+    <br>
 
-						{% if user.is_authenticated %}
-								<input type="submit" value="Submit Review" class="btn btn-primary">
-						{% else %}
-						<p>You must be logged in to post a review. <span><a href="{% url 'login' %}">Login now</a></span></p>
-						{% endif %}
-						<div class="alert alert-danger" role="alert" style="margin-top:10px;">
-  2-Factor Review Submission is disabled for demo purpose.
-</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 24px;">
+      <div style="flex: 0 0 75%; max-width: 75%; box-sizing: border-box;">
 
-					</div>
-{% include 'includes/alerts.html' %}
-				</form>
-<br>
-<header class="section-heading">
-	<h3>Customer Reviews </h3>
-	<div class="rating-star">
-		<span>
-			<i class="fa fa-star{% if single_product.averageReview < 0.5 %}-o{% elif single_product.averageReview >= 0.5 and single_product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
-			<i class="fa fa-star{% if single_product.averageReview < 1.5 %}-o{% elif single_product.averageReview >= 1.5 and single_product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
-			<i class="fa fa-star{% if single_product.averageReview < 2.5 %}-o{% elif single_product.averageReview >= 2.5 and single_product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
-			<i class="fa fa-star{% if single_product.averageReview < 3.5 %}-o{% elif single_product.averageReview >= 3.5 and single_product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
-			<i class="fa fa-star{% if single_product.averageReview < 4.5 %}-o{% elif single_product.averageReview >= 4.5 and single_product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
-	<span>{{single_product.countReview}} reviews</span>
-			</span>
-	</div>
+        <!-- REVIEW FORM -->
+        <form action="{% url 'submit_review' single_product.id %}" method="POST">
+          {% csrf_token %}
+          <h5 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 16px;">Write Your Review</h5>
 
-</header>
+          <div>
+            <label style="display: block; margin-bottom: 8px; font-size: 14px;">How do you rate this product?</label>
 
-{% for review in reviews %}
-				<article class="box mb-3">
-					<div class="icontext w-100">
+            <!-- Star Rating Input -->
+            <div class="rate-wrap" style="margin-bottom: 12px;">
+              <input type="radio" name="rating" id="rating10" value="5" required><label for="rating10" title="5">★</label>
+              <input type="radio" name="rating" id="rating9"  value="4.5"><label for="rating9"  title="4.5">½</label>
+              <input type="radio" name="rating" id="rating8"  value="4"><label for="rating8"   title="4">★</label>
+              <input type="radio" name="rating" id="rating7"  value="3.5"><label for="rating7" title="3.5">½</label>
+              <input type="radio" name="rating" id="rating6"  value="3"><label for="rating6"   title="3">★</label>
+              <input type="radio" name="rating" id="rating5"  value="2.5"><label for="rating5" title="2.5">½</label>
+              <input type="radio" name="rating" id="rating4"  value="2"><label for="rating4"   title="2">★</label>
+              <input type="radio" name="rating" id="rating3"  value="1.5"><label for="rating3" title="1.5">½</label>
+              <input type="radio" name="rating" id="rating2"  value="1"><label for="rating2"   title="1">★</label>
+              <input type="radio" name="rating" id="rating1"  value="0.5"><label for="rating1" title="0.5">½</label>
+            </div>
 
-						<div class="text">
-							<span class="date text-muted float-md-right">{{review.updated_at}} </span>
-							<h6 class="mb-1">{{review.user.full_name}} </h6>
-							<div class="rating-star">
-								<span>
-									<i class="fa fa-star{% if review.rating == 0.5 %}-half-o{% elif review.rating < 1 %}-o {% endif %}" aria-hidden="true"></i>
-									<i class="fa fa-star{% if review.rating == 1.5 %}-half-o{% elif review.rating < 2 %}-o {% endif %}" aria-hidden="true"></i>
-									<i class="fa fa-star{% if review.rating == 2.5 %}-half-o{% elif review.rating < 3 %}-o {% endif %}" aria-hidden="true"></i>
-									<i class="fa fa-star{% if review.rating == 3.5 %}-half-o{% elif review.rating < 4 %}-o {% endif %}" aria-hidden="true"></i>
-									<i class="fa fa-star{% if review.rating == 4.5 %}-half-o{% elif review.rating < 5 %}-o {% endif %}" aria-hidden="true"></i>
-								</span>
-							</div>
-						</div>
-					</div> <!-- icontext.// -->
-					<div class="mt-3">
-						<h6>{{review.subject}}</h6>
-						<p>
-							{{review.review}}
-						</p>
-					</div>
-				</article>
-{% endfor %}
+            <label style="display: block; margin-bottom: 4px; font-size: 14px;">Review Title:</label>
+            <input type="text" name="subject" style="display: block; width: 100%; padding: 6px 12px; font-size: 14px; border: 1px solid #ced4da; border-radius: 4px; margin-bottom: 12px; box-sizing: border-box;">
 
+            <label style="display: block; margin-bottom: 4px; font-size: 14px;">Review:</label>
+            <textarea name="review" rows="4" style="display: block; width: 100%; padding: 6px 12px; font-size: 14px; border: 1px solid #ced4da; border-radius: 4px; margin-bottom: 12px; box-sizing: border-box; resize: vertical;"></textarea>
 
-			</div> <!-- col.// -->
-		</div> <!-- row.// -->
+            {% if user.is_authenticated %}
+              <input type="submit" value="Submit Review" style="padding: 8px 18px; background: #007bff; color: #fff; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;">
+            {% else %}
+              <p style="font-size: 14px; color: #495057;">You must be logged in to post a review. <a href="{% url 'login' %}" style="color: #007bff;">Login now</a></p>
+            {% endif %}
 
+            <div style="margin-top: 12px; padding: 12px 16px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px; color: #721c24; font-size: 14px;" role="alert">
+              2-Factor Review Submission is disabled for demo purpose.
+            </div>
 
-	</div> <!-- container .//  -->
+          </div>
+
+          {% include 'includes/alerts.html' %}
+        </form>
+
+        <br>
+
+        <!-- CUSTOMER REVIEWS HEADER -->
+        <header style="margin-bottom: 16px;">
+          <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 8px;">Customer Reviews</h3>
+          <div style="color: #f0ad4e; font-size: 16px;">
+            <span>
+              <i class="fa fa-star{% if single_product.averageReview < 0.5 %}-o{% elif single_product.averageReview >= 0.5 and single_product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+              <i class="fa fa-star{% if single_product.averageReview < 1.5 %}-o{% elif single_product.averageReview >= 1.5 and single_product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+              <i class="fa fa-star{% if single_product.averageReview < 2.5 %}-o{% elif single_product.averageReview >= 2.5 and single_product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+              <i class="fa fa-star{% if single_product.averageReview < 3.5 %}-o{% elif single_product.averageReview >= 3.5 and single_product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+              <i class="fa fa-star{% if single_product.averageReview < 4.5 %}-o{% elif single_product.averageReview >= 4.5 and single_product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+              <span style="font-size: 13px; color: #6c757d; margin-left: 4px;">{{ single_product.countReview }} reviews</span>
+            </span>
+          </div>
+        </header>
+
+        <!-- INDIVIDUAL REVIEWS -->
+        {% for review in reviews %}
+        <article style="background: #fff; border: 1px solid #dee2e6; border-radius: 6px; padding: 16px; margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <h6 style="font-size: 15px; font-weight: 600; margin: 0 0 4px;">{{ review.user.full_name }}</h6>
+              <div style="color: #f0ad4e; font-size: 15px;">
+                <span>
+                  <i class="fa fa-star{% if review.rating == 0.5 %}-half-o{% elif review.rating < 1 %}-o {% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if review.rating == 1.5 %}-half-o{% elif review.rating < 2 %}-o {% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if review.rating == 2.5 %}-half-o{% elif review.rating < 3 %}-o {% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if review.rating == 3.5 %}-half-o{% elif review.rating < 4 %}-o {% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if review.rating == 4.5 %}-half-o{% elif review.rating < 5 %}-o {% endif %}" aria-hidden="true"></i>
+                </span>
+              </div>
+            </div>
+            <span style="font-size: 13px; color: #6c757d;">{{ review.updated_at }}</span>
+          </div>
+          <div style="margin-top: 12px;">
+            <h6 style="font-size: 14px; font-weight: 600; margin-bottom: 6px;">{{ review.subject }}</h6>
+            <p style="font-size: 14px; color: #495057; margin: 0;">{{ review.review }}</p>
+          </div>
+        </article>
+        {% endfor %}
+
+      </div>
+    </div>
+
+  </div>
 </section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
 
 {% endblock %}

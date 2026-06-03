@@ -1,56 +1,61 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 
-<section class="section-conten padding-y bg">
+<section style="padding-top: 40px; padding-bottom: 40px; background-color: #f8f9fa;">
 
-{% include 'includes/alerts.html' %}
-<div class="container">
-	<div class="row">
-	{% include 'includes/dashboard_sidebar.html' %}
-	<main class="col-md-9">
-		<article class="card">
-		<header class="card-header">
-			<strong class="d-inline-block mr-3">Your order history</strong>
+  {% include 'includes/alerts.html' %}
 
-		</header>
-		<div class="card-body">
-			<div class="row">
-			<div class="col-md-12">
-				<table class="table table-hover">
-				  <thead>
-				    <tr>
-				      <th scope="col">Order #</th>
-				      <th scope="col">Billing Name</th>
-				      <th scope="col">Phone</th>
-				      <th scope="col">Order Total</th>
-							<th scope="col">Date</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-						{% for order in orders %}
-				    <tr>
-				      <th scope="row"><a href="{% url 'order_detail' order.order_number %}">{{order.order_number}}</a></th>
-				      <td>{{order.full_name}}</td>
-				      <td>{{order.phone}}</td>
-				      <td>${{order.order_total}}</td>
-							<td>{{order.created_at}}</td>
-				    </tr>
-				{% endfor %}
+  <div style="max-width: 1140px; margin: 0 auto; padding: 0 15px;">
+    <div style="display: flex; flex-wrap: wrap; margin: 0 -15px;">
 
-				  </tbody>
-				</table>
-			</div>
+      {% include 'includes/dashboard_sidebar.html' %}
 
-			</div> <!-- row.// -->
-		</div> <!-- card-body .// -->
+      <main style="flex: 0 0 75%; max-width: 75%; padding: 0 15px; box-sizing: border-box;">
+        <article style="border: 1px solid #dee2e6; border-radius: 6px; background: #fff;">
 
-		</article> <!-- order-group.// -->
-	</main>
-</div> <!-- row.// -->
-</div>
+          <header style="padding: 12px 16px; background-color: #f7f7f7; border-bottom: 1px solid #dee2e6; border-radius: 6px 6px 0 0;">
+            <strong style="display: inline-block; margin-right: 12px;">Your order history</strong>
+          </header>
 
+          <div style="padding: 16px;">
+            <div style="display: flex; flex-wrap: wrap;">
+              <div style="width: 100%; box-sizing: border-box;">
+
+                <table style="width: 100%; border-collapse: collapse;">
+                  <thead>
+                    <tr style="border-bottom: 2px solid #dee2e6;">
+                      <th style="padding: 10px 12px; text-align: left; font-weight: 600;">Order #</th>
+                      <th style="padding: 10px 12px; text-align: left; font-weight: 600;">Billing Name</th>
+                      <th style="padding: 10px 12px; text-align: left; font-weight: 600;">Phone</th>
+                      <th style="padding: 10px 12px; text-align: left; font-weight: 600;">Order Total</th>
+                      <th style="padding: 10px 12px; text-align: left; font-weight: 600;">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for order in orders %}
+                    <tr style="border-bottom: 1px solid #dee2e6; transition: background 0.15s;">
+                      <th style="padding: 10px 12px; font-weight: normal;">
+                        <a href="{% url 'order_detail' order.order_number %}" style="color: #0d6efd; text-decoration: none;">{{order.order_number}}</a>
+                      </th>
+                      <td style="padding: 10px 12px;">{{order.full_name}}</td>
+                      <td style="padding: 10px 12px;">{{order.phone}}</td>
+                      <td style="padding: 10px 12px;">${{order.order_total}}</td>
+                      <td style="padding: 10px 12px;">{{order.created_at}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+          </div>
+
+        </article>
+      </main>
+
+    </div>
+  </div>
 
 </section>
 
