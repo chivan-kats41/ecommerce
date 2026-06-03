@@ -99,11 +99,11 @@ if 'RDS_DB_NAME' in os.environ:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ['opportunityhub-db'],
-            'USER': os.environ['opportunityhub_db_user'],
-            'PASSWORD': os.environ['paIMArPISeWzTDaOIjgzqOjWlEDajH6w'],
-            'HOST': os.environ['dpg-d82d349kh4rs73c4vta0-a'],
-            'PORT': os.environ['5432'],
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
         }
     }
 else:
@@ -113,8 +113,6 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-
-
 
 
 # Password validation
