@@ -1,41 +1,113 @@
-<aside style="width: 25%; padding: 0 15px; box-sizing: border-box;">
+<style>
+  .dashboard-sidebar {
+    width: 25%;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
 
+  .sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .sidebar-nav a {
+    display: block;
+    padding: 12px 16px;
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #333;
+    background: #fff;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .sidebar-nav a:last-child {
+    border-bottom: none;
+  }
+
+  .sidebar-nav a.active {
+    background: #007bff;
+    color: #fff;
+  }
+
+  .sidebar-logout {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px 16px;
+    background: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: background 0.15s;
+  }
+
+  .sidebar-logout:hover {
+    background: #e2e6ea;
+  }
+
+  /* Tablet: sidebar goes full width and stacks above main content */
+  @media (max-width: 991px) {
+    .dashboard-sidebar {
+      width: 100%;
+      padding: 0 15px;
+      margin-bottom: 20px;
+    }
+  }
+
+  /* Mobile: turn nav links into a compact horizontal scrollable strip */
+  @media (max-width: 575px) {
+    .sidebar-nav {
+      display: flex;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .sidebar-nav a {
+      border-bottom: none;
+      border-right: 1px solid #e0e0e0;
+      flex-shrink: 0;
+    }
+
+    .sidebar-nav a:last-child {
+      border-right: none;
+    }
+  }
+</style>
+
+<aside class="dashboard-sidebar">
   <!-- SIDEBAR -->
-  <ul style="list-style: none; padding: 0; margin: 0; border: 1px solid #e0e0e0; border-radius: 6px; overflow: hidden;">
-
+  <ul class="sidebar-nav">
     <a href="{% url 'dashboard' %}"
-       style="display: block; padding: 12px 16px; text-decoration: none; font-size: 14px; border-bottom: 1px solid #e0e0e0;
-              {% if '/accounts/' == request.path %}background: #007bff; color: #fff;{% else %}color: #333; background: #fff;{% endif %}">
+       class="{% if '/accounts/' == request.path %}active{% endif %}">
       Dashboard
     </a>
-
     <a href="{% url 'my_orders' %}"
-       style="display: block; padding: 12px 16px; text-decoration: none; font-size: 14px; border-bottom: 1px solid #e0e0e0;
-              {% if '/my_orders/' in request.path %}background: #007bff; color: #fff;{% else %}color: #333; background: #fff;{% endif %}">
+       class="{% if '/my_orders/' in request.path %}active{% endif %}">
       My Orders
     </a>
-
     <a href="{% url 'edit_profile' %}"
-       style="display: block; padding: 12px 16px; text-decoration: none; font-size: 14px; border-bottom: 1px solid #e0e0e0;
-              {% if '/edit_profile/' in request.path %}background: #007bff; color: #fff;{% else %}color: #333; background: #fff;{% endif %}">
+       class="{% if '/edit_profile/' in request.path %}active{% endif %}">
       Edit Profile
     </a>
-
     <a href="{% url 'change_password' %}"
-       style="display: block; padding: 12px 16px; text-decoration: none; font-size: 14px;
-              {% if '/change_password/' in request.path %}background: #007bff; color: #fff;{% else %}color: #333; background: #fff;{% endif %}">
+       class="{% if '/change_password/' in request.path %}active{% endif %}">
       Change Password
     </a>
-
   </ul>
 
-  <br>
-
-  <a href="{% url 'logout' %}"
-     style="display: block; width: 100%; padding: 10px 16px; background: #f8f9fa; color: #333; border: 1px solid #ddd;
-            border-radius: 4px; text-align: center; text-decoration: none; font-size: 14px; box-sizing: border-box;">
+  <a href="{% url 'logout' %}" class="sidebar-logout">
     <i class="fa fa-power-off"></i> <span>Log out</span>
   </a>
   <!-- SIDEBAR .//END -->
-
 </aside>
