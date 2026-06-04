@@ -3,25 +3,254 @@
 
 {% block content %}
 
-<section style="padding-top: 40px; padding-bottom: 40px; background-color: #f8f9fa;">
-  <div style="max-width: 1140px; margin: 0 auto; padding: 0 15px;">
+<style>
+  .checkout-section {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #f8f9fa;
+  }
 
-    <h4 style="text-align: center; margin-bottom: 20px;">Review Your Order and Make Payment</h4>
-    <div style="display: flex; flex-wrap: wrap; margin: 0 -15px;">
+  .checkout-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .checkout-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .checkout-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+  }
+
+  /* Left column: 2/3 width on desktop */
+  .checkout-col-main {
+    flex: 0 0 66.666%;
+    max-width: 66.666%;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+
+  /* Right column: 1/3 width on desktop */
+  .checkout-col-side {
+    flex: 0 0 33.333%;
+    max-width: 33.333%;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+
+  .checkout-card {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    background: #fff;
+  }
+
+  .checkout-card-header {
+    padding: 12px 16px;
+    margin: 0;
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 1rem;
+  }
+
+  .checkout-card-body {
+    padding: 16px;
+  }
+
+  .checkout-card-body p {
+    margin-bottom: 0;
+  }
+
+  /* Products table */
+  .products-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .products-table thead tr {
+    color: #6c757d;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .products-table th {
+    padding: 8px;
+    text-align: left;
+    border: none;
+  }
+
+  .products-table th.col-qty  { width: 120px; }
+  .products-table th.col-price { width: 120px; }
+
+  .products-table td {
+    padding: 12px 8px;
+    border: none;
+    vertical-align: middle;
+  }
+
+  .product-figure {
+    display: flex;
+    align-items: center;
+    margin: 0;
+  }
+
+  .product-img-wrap {
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+
+  .product-img-wrap img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .product-name {
+    color: #212529;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .product-variations {
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin: 4px 0 0;
+  }
+
+  .product-price-main {
+    font-style: normal;
+    font-weight: 600;
+    display: block;
+  }
+
+  .product-price-each {
+    color: #6c757d;
+  }
+
+  /* Order summary */
+  .summary-dl {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .summary-dl dt { font-weight: normal; }
+  .summary-dl dd { margin: 0; text-align: right; }
+
+  .summary-hr {
+    margin: 12px 0;
+    border: none;
+    border-top: 1px solid #dee2e6;
+  }
+
+  .payments-img-wrap {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .checkout-alert {
+    padding: 12px 16px;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    color: #721c24;
+  }
+
+  /* ── Tablet: ≤ 768px ── */
+  @media (max-width: 768px) {
+    .checkout-col-main,
+    .checkout-col-side {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    /* Stack product rows vertically */
+    .products-table thead {
+      display: none;
+    }
+
+    .products-table,
+    .products-table tbody,
+    .products-table tr,
+    .products-table td {
+      display: block;
+      width: 100%;
+    }
+
+    .products-table tr {
+      border-bottom: 1px solid #dee2e6;
+      padding: 12px 0;
+    }
+
+    .products-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .products-table td {
+      padding: 4px 8px;
+    }
+
+    /* Show inline labels for qty/price on mobile */
+    .products-table td[data-label]::before {
+      content: attr(data-label) ": ";
+      font-weight: 600;
+      color: #6c757d;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+  }
+
+  /* ── Mobile: ≤ 480px ── */
+  @media (max-width: 480px) {
+    .checkout-container {
+      padding: 0 10px;
+    }
+
+    .checkout-title {
+      font-size: 1.1rem;
+    }
+
+    .checkout-card-body {
+      padding: 12px;
+    }
+
+    .product-img-wrap img {
+      width: 60px;
+      height: 60px;
+    }
+
+    .checkout-col-main,
+    .checkout-col-side {
+      padding: 0 5px;
+    }
+  }
+</style>
+
+<section class="checkout-section">
+  <div class="checkout-container">
+
+    <h4 class="checkout-title">Review Your Order and Make Payment</h4>
+    <div class="checkout-row">
 
       <!-- Left Column -->
-      <aside style="flex: 0 0 66.666%; max-width: 66.666%; padding: 0 15px; box-sizing: border-box;">
+      <aside class="checkout-col-main">
 
         <!-- Billing Address Card -->
-        <div style="border: 1px solid #dee2e6; border-radius: 4px; margin-bottom: 20px; background: #fff;">
-          <h5 style="padding: 12px 16px; margin: 0; background-color: #f7f7f7; border-bottom: 1px solid #dee2e6; font-size: 1rem;">Billing Address</h5>
-          <div style="padding: 16px;">
-            <p style="margin-bottom: 0;">{{order.full_name}}</p>
-            <p style="margin-bottom: 0;">{{order.full_address}}</p>
-            <p style="margin-bottom: 0;">{{order.city}}, {{order.state}}</p>
-            <p style="margin-bottom: 0;">{{order.country}}</p>
-            <p style="margin-bottom: 0;">{{order.email}}</p>
-            <p style="margin-bottom: 0;">{{order.phone}}</p>
+        <div class="checkout-card">
+          <h5 class="checkout-card-header">Billing Address</h5>
+          <div class="checkout-card-body">
+            <p>{{order.full_name}}</p>
+            <p>{{order.full_address}}</p>
+            <p>{{order.city}}, {{order.state}}</p>
+            <p>{{order.country}}</p>
+            <p>{{order.email}}</p>
+            <p>{{order.phone}}</p>
             {% if order.order_note %}
             <b>Order Note: </b> {{order.order_note}}
             {% endif %}
@@ -29,36 +258,36 @@
         </div>
 
         <!-- Payment Method Card -->
-        <div style="border: 1px solid #dee2e6; border-radius: 4px; margin-bottom: 20px; background: #fff;">
-          <h5 style="padding: 12px 16px; margin: 0; background-color: #f7f7f7; border-bottom: 1px solid #dee2e6; font-size: 1rem;">Payment Method</h5>
-          <div style="padding: 16px;">
-            <p style="margin-bottom: 0;">PayPal</p>
+        <div class="checkout-card">
+          <h5 class="checkout-card-header">Payment Method</h5>
+          <div class="checkout-card-body">
+            <p>PayPal</p>
           </div>
         </div>
 
         <!-- Review Products Card -->
-        <div style="border: 1px solid #dee2e6; border-radius: 4px; margin-bottom: 20px; background: #fff;">
-          <h5 style="padding: 12px 16px; margin: 0; background-color: #f7f7f7; border-bottom: 1px solid #dee2e6; font-size: 1rem;">Review Products</h5>
-          <div style="padding: 16px;">
-            <table style="width: 100%; border-collapse: collapse;">
+        <div class="checkout-card">
+          <h5 class="checkout-card-header">Review Products</h5>
+          <div class="checkout-card-body">
+            <table class="products-table">
               <thead>
-                <tr style="color: #6c757d; font-size: 0.75rem; text-transform: uppercase;">
-                  <th style="padding: 8px; text-align: left; border: none;">Product</th>
-                  <th style="padding: 8px; text-align: left; border: none; width: 120px;">Quantity</th>
-                  <th style="padding: 8px; text-align: left; border: none; width: 120px;">Price</th>
+                <tr>
+                  <th>Product</th>
+                  <th class="col-qty">Quantity</th>
+                  <th class="col-price">Price</th>
                 </tr>
               </thead>
               <tbody>
                 {% for cart_item in cart_items %}
                 <tr>
-                  <td style="padding: 12px 8px; border: none; vertical-align: middle;">
-                    <figure style="display: flex; align-items: center; margin: 0;">
-                      <div style="margin-right: 12px; flex-shrink: 0;">
-                        <img src="{{ cart_item.product.images.url }}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px;">
+                  <td>
+                    <figure class="product-figure">
+                      <div class="product-img-wrap">
+                        <img src="{{ cart_item.product.images.url }}" alt="{{ cart_item.product.product_name }}">
                       </div>
                       <figcaption>
-                        <a href="{{ cart_item.product.get_url }}" style="color: #212529; text-decoration: none; font-weight: 500;">{{ cart_item.product.product_name }}</a>
-                        <p style="color: #6c757d; font-size: 0.85rem; margin: 4px 0 0;">
+                        <a href="{{ cart_item.product.get_url }}" class="product-name">{{ cart_item.product.product_name }}</a>
+                        <p class="product-variations">
                           {% if cart_item.variations.all %}
                           {% for item in cart_item.variations.all %}
                           {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
@@ -68,13 +297,13 @@
                       </figcaption>
                     </figure>
                   </td>
-                  <td style="padding: 12px 8px; border: none; vertical-align: middle;">
+                  <td data-label="Quantity">
                     <label style="margin: 0;">{{cart_item.quantity}}</label>
                   </td>
-                  <td style="padding: 12px 8px; border: none; vertical-align: middle;">
+                  <td data-label="Price">
                     <div>
-                      <var style="font-style: normal; font-weight: 600; display: block;">$ {{ cart_item.sub_total }}</var>
-                      <small style="color: #6c757d;">$ {{ cart_item.product.price }} each</small>
+                      <var class="product-price-main">$ {{ cart_item.sub_total }}</var>
+                      <small class="product-price-each">$ {{ cart_item.product.price }} each</small>
                     </div>
                   </td>
                 </tr>
@@ -87,25 +316,25 @@
       </aside>
 
       <!-- Right Column -->
-      <aside style="flex: 0 0 33.333%; max-width: 33.333%; padding: 0 15px; box-sizing: border-box;">
+      <aside class="checkout-col-side">
 
         <!-- Order Summary Card -->
-        <div style="border: 1px solid #dee2e6; border-radius: 4px; margin-bottom: 20px; background: #fff;">
-          <div style="padding: 16px;">
-            <dl style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-              <dt style="font-weight: normal;">Total price:</dt>
-              <dd style="margin: 0; text-align: right;">$ {{total}}</dd>
+        <div class="checkout-card">
+          <div class="checkout-card-body">
+            <dl class="summary-dl">
+              <dt>Total price:</dt>
+              <dd>$ {{total}}</dd>
             </dl>
-            <dl style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-              <dt style="font-weight: normal;">Tax:</dt>
-              <dd style="margin: 0; text-align: right;">$ {{tax}}</dd>
+            <dl class="summary-dl">
+              <dt>Tax:</dt>
+              <dd>$ {{tax}}</dd>
             </dl>
-            <dl style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-              <dt style="font-weight: normal;">Grand Total:</dt>
-              <dd style="margin: 0; text-align: right; color: #212529;"><strong>$ {{grand_total}}</strong></dd>
+            <dl class="summary-dl">
+              <dt>Grand Total:</dt>
+              <dd style="color: #212529;"><strong>$ {{grand_total}}</strong></dd>
             </dl>
-            <hr style="margin: 12px 0; border: none; border-top: 1px solid #dee2e6;">
-            <p style="text-align: center; margin-bottom: 12px;">
+            <hr class="summary-hr">
+            <p class="payments-img-wrap">
               <img src="{% static './images/misc/payments.png' %}" height="26">
             </p>
             <div id="paypal-button-container">
@@ -115,7 +344,7 @@
         </div>
 
         <!-- Alert -->
-        <div style="padding: 12px 16px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px; color: #721c24;">
+        <div class="checkout-alert">
           <b>Please Note: </b>This is a demo website. Do not try to make real payments.
         </div>
 
