@@ -8,7 +8,7 @@ django-admin-thumbnails==0.2.5
 django-session-timeout==0.1.0
 django-storages
 idna
-Django==4.2.20
+Django==4.2.27
 jmespath
 Pillow==11.1.0
 psycopg[binary]==3.3.4
