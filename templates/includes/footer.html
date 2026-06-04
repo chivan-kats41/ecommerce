@@ -1,84 +1,267 @@
-
 {% load static %}
 <!-- ========================= FOOTER ========================= -->
-<footer style="background: #1a1a2e; color: #ccc; padding: 48px 0 0 0; margin-top: 40px;">
-  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+<style>
+  .footer {
+    background: #1a1a2e;
+    color: #ccc;
+    padding: 48px 0 0 0;
+    margin-top: 40px;
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* Columns */
+  .footer-brand  { flex: 1 1 220px; }
+  .footer-links  { flex: 1 1 140px; }
+  .footer-help   { flex: 1 1 140px; }
+  .footer-contact { flex: 1 1 200px; }
+
+  .footer-brand h3 {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .footer-brand p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #aaa;
+    margin: 0 0 20px;
+  }
+
+  .footer-payments {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .footer-payments span {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .footer-payments img {
+    height: 30px;
+    width: auto;
+  }
+
+  .footer-col-title {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 16px;
+  }
+
+  .footer-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-nav a,
+  .footer-contact-list a {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.15s;
+  }
+
+  .footer-nav a:hover,
+  .footer-contact-list a:hover {
+    color: #fff;
+  }
+
+  .footer-contact-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footer-contact-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .footer-contact-list i {
+    color: #888;
+    font-size: 13px;
+    margin-top: 2px;
+  }
+
+  .footer-contact-list span,
+  .footer-contact-list a {
+    font-size: 13px;
+    color: #aaa;
+    line-height: 1.5;
+  }
+
+  /* Bottom bar */
+  .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 0;
+  }
+
+  .footer-bottom p {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 16px;
+  }
+
+  .footer-socials a {
+    color: #666;
+    font-size: 18px;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .footer-socials a:hover {
+    color: #fff;
+  }
+
+  /* Tablet: tighten gap, columns still wrap naturally via flex */
+  @media (max-width: 768px) {
+    .footer-top {
+      gap: 28px;
+    }
+
+    .footer-brand {
+      flex: 1 1 100%;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 575px) {
+    .footer {
+      padding: 32px 0 0;
+    }
+
+    .footer-container {
+      padding: 0 16px;
+    }
+
+    .footer-top {
+      gap: 24px;
+    }
+
+    /* All columns full width on mobile */
+    .footer-brand,
+    .footer-links,
+    .footer-help,
+    .footer-contact {
+      flex: 1 1 100%;
+    }
+
+    /* Links and Help side by side to save space */
+    .footer-links,
+    .footer-help {
+      flex: 1 1 45%;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+  }
+</style>
+
+<footer class="footer">
+  <div class="footer-container">
 
     <!-- Top Section -->
-    <div style="display: flex; flex-wrap: wrap; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+    <div class="footer-top">
 
-      <!-- Brand Column -->
-      <div style="flex: 1 1 220px;">
-        <h3 style="color: #fff; font-size: 20px; font-weight: 700; margin: 0 0 12px; letter-spacing: 0.5px;">CyberKarts</h3>
-        <p style="font-size: 13px; line-height: 1.7; color: #aaa; margin: 0 0 20px;">Your trusted online marketplace in Uganda. Quality products, fast delivery, and secure payments.</p>
-
-
-        <!-- Payment Icons -->
-
-  <div style="display: flex; gap: 10px; align-items: center;">
-    <span style="font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px;">
-        We accept:
-    </span>
-
-    <img src="{% static 'images/misc/payments.png' %}"
-         alt="Payment Methods"
-         style="height: 30px; width: auto;">
-</div>
+      <!-- Brand -->
+      <div class="footer-brand">
+        <h3>CyberKarts</h3>
+        <p>Your trusted online marketplace in Uganda. Quality products, fast delivery, and secure payments.</p>
+        <div class="footer-payments">
+          <span>We accept:</span>
+          <img src="{% static 'images/misc/payments.png' %}" alt="Payment Methods">
+        </div>
       </div>
 
       <!-- Quick Links -->
-<div style="flex: 1 1 140px;">
-  <h6 style="color: #fff; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 16px;">Quick Links</h6>
-  <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px;">
-
-    <li><a href="{% url 'home' %}" style="color: #aaa; text-decoration: none; font-size: 13px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">Home</a></li>
-
-    <li><a href="{% url 'store' %}" style="color: #aaa; text-decoration: none; font-size: 13px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">Shop</a></li>
-
-    {% if user.is_authenticated %}
-    <li><a href="{% url 'dashboard' %}" style="color: #aaa; text-decoration: none; font-size: 13px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">My Account</a></li>
-    {% else %}
-    <li><a href="{% url 'register' %}" style="color: #aaa; text-decoration: none; font-size: 13px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">My Account</a></li>
-    {% endif %}
-
-    <li><a href="{% url 'order_complete' %}" style="color: #aaa; text-decoration: none; font-size: 13px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">Orders</a></li>
-
-    <li><a href="{% url 'cart' %}" style="color: #aaa; text-decoration: none; font-size: 13px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">Cart</a></li>
-
-  </ul>
-</div>
-
-      <!-- Help -->
-      <div style="flex: 1 1 140px;">
-        <h6 style="color: #fff; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 16px;">Help</h6>
-        <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px;">
-          <li><a href="{% url 'faq' %}" style="color: #aaa; text-decoration: none; font-size: 13px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">FAQ</a></li>
-          <li><a href="{% url 'shipping' %}" style="color: #aaa; text-decoration: none; font-size: 13px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">Shipping Policy</a></li>
-          <li><a href="{% url 'returns' %}" style="color: #aaa; text-decoration: none; font-size: 13px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">Returns</a></li>
-          <li><a href="{% url 'privacy' %}" style="color: #aaa; text-decoration: none; font-size: 13px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">Privacy Policy</a></li>
-          <li><a href="{% url 'terms' %}" style="color: #aaa; text-decoration: none; font-size: 13px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">Terms of Use</a></li>
+      <div class="footer-links">
+        <h6 class="footer-col-title">Quick Links</h6>
+        <ul class="footer-nav">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'store' %}">Shop</a></li>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'dashboard' %}">My Account</a></li>
+          {% else %}
+          <li><a href="{% url 'register' %}">My Account</a></li>
+          {% endif %}
+          <li><a href="{% url 'order_complete' %}">Orders</a></li>
+          <li><a href="{% url 'cart' %}">Cart</a></li>
         </ul>
       </div>
 
-      <!-- Contact Column -->
-      <div style="flex: 1 1 200px;">
-        <h6 style="color: #fff; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 16px;">Contact Us</h6>
-        <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px;">
-          <li style="display: flex; align-items: flex-start; gap: 10px;">
-            <i class="fa fa-map-marker-alt" style="color: #888; font-size: 14px; margin-top: 2px;"></i>
-            <span style="font-size: 13px; color: #aaa; line-height: 1.5;">Kampala - Uganda, CitySquare</span>
+      <!-- Help -->
+      <div class="footer-help">
+        <h6 class="footer-col-title">Help</h6>
+        <ul class="footer-nav">
+          <li><a href="{% url 'faq' %}">FAQ</a></li>
+          <li><a href="{% url 'shipping' %}">Shipping Policy</a></li>
+          <li><a href="{% url 'returns' %}">Returns</a></li>
+          <li><a href="{% url 'privacy' %}">Privacy Policy</a></li>
+          <li><a href="{% url 'terms' %}">Terms of Use</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="footer-contact">
+        <h6 class="footer-col-title">Contact Us</h6>
+        <ul class="footer-contact-list">
+          <li>
+            <i class="fa fa-map-marker-alt"></i>
+            <span>Kampala - Uganda, CitySquare</span>
           </li>
-          <li style="display: flex; align-items: center; gap: 10px;">
-            <i class="fa fa-phone-alt" style="color: #888; font-size: 13px;"></i>
-            <span style="font-size: 13px; color: #aaa;">+256 705 221 604</span>
+          <li>
+            <i class="fa fa-phone-alt"></i>
+            <span>+256 705 221 604</span>
           </li>
-          <li style="display: flex; align-items: center; gap: 10px;">
-            <i class="fa fa-phone-alt" style="color: #888; font-size: 13px;"></i>
-            <span style="font-size: 13px; color: #aaa;">+256 762 899 641</span>
+          <li>
+            <i class="fa fa-phone-alt"></i>
+            <span>+256 762 899 641</span>
           </li>
-          <li style="display: flex; align-items: center; gap: 10px;">
-            <i class="fa fa-envelope" style="color: #888; font-size: 13px;"></i>
-            <a href="mailto:info@cyberkarts.io.com" style="font-size: 13px; color: #aaa; text-decoration: none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">info@cyberkarts.io.com</a>
+          <li>
+            <i class="fa fa-envelope"></i>
+            <a href="mailto:info@cyberkarts.io.com">info@cyberkarts.io.com</a>
           </li>
         </ul>
       </div>
@@ -86,15 +269,13 @@
     </div>
 
     <!-- Bottom Bar -->
-    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 0;">
-      <p style="margin: 0; font-size: 12px; color: #666;">
-    &copy; {% now "Y" %} CyberManagement. All rights reserved.
-</p>
-      <div style="display: flex; gap: 16px;">
-        <a href="#" style="color: #666; font-size: 18px; text-decoration: none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" style="color: #666; font-size: 18px; text-decoration: none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'" title="Twitter"><i class="fab fa-twitter"></i></a>
-        <a href="#" style="color: #666; font-size: 18px; text-decoration: none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'" title="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="#" style="color: #666; font-size: 18px; text-decoration: none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    <div class="footer-bottom">
+      <p>&copy; {% now "Y" %} CyberManagement. All rights reserved.</p>
+      <div class="footer-socials">
+        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
       </div>
     </div>
 
