@@ -2,36 +2,398 @@
 {% load static %}
 
 <style>
+  /* ===== Star rating widget ===== */
   .rate-wrap input[type="radio"] { display: none; }
   .rate-wrap label { color: #ddd; cursor: pointer; }
   .rate-wrap input[type="radio"]:checked ~ label,
   .rate-wrap label:hover,
   .rate-wrap label:hover ~ label { color: #f0ad4e; }
-  .rate-wrap { display: flex; flex-direction: row-reverse; justify-content: flex-end; font-size: 28px; gap: 2px; }
+  .rate-wrap {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    font-size: 28px;
+    gap: 2px;
+  }
+
+  /* ===== Layout ===== */
+  .product-section {
+    padding: 40px 0;
+    background: #f8f9fa;
+  }
+
+  .product-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  /* Product card */
+  .product-card {
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+
+  .product-card-inner {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  /* Left: images */
+  .product-images {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .product-main-img {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .product-main-img img {
+    max-width: 100%;
+    max-height: 380px;
+    object-fit: contain;
+  }
+
+  .product-thumbnails {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .product-thumbnails li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .product-thumbnails img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+  }
+
+  /* Right: product info */
+  .product-info {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 20px;
+    box-sizing: border-box;
+    border-left: 1px solid #dee2e6;
+  }
+
+  .product-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .product-rating {
+    margin-bottom: 12px;
+    color: #f0ad4e;
+    font-size: 16px;
+  }
+
+  .product-rating .review-count {
+    font-size: 13px;
+    color: #6c757d;
+    margin-left: 4px;
+  }
+
+  .product-price {
+    margin-bottom: 16px;
+  }
+
+  .product-price var {
+    font-size: 1.4rem;
+    font-weight: 700;
+    font-style: normal;
+    color: #212529;
+  }
+
+  .product-description {
+    color: #495057;
+    margin-bottom: 16px;
+  }
+
+  .product-divider {
+    border: 0;
+    border-top: 1px solid #dee2e6;
+    margin: 16px 0;
+  }
+
+  .variant-group {
+    margin-bottom: 16px;
+  }
+
+  .variant-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .variant-select {
+    display: block;
+    width: 100%;
+    padding: 6px 12px;
+    font-size: 14px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background: #fff;
+  }
+
+  .out-of-stock {
+    color: #dc3545;
+    font-size: 1rem;
+  }
+
+  .btn-add-cart {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 15px;
+    cursor: pointer;
+  }
+
+  /* ===== Review & customer reviews layout ===== */
+  .reviews-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .reviews-col {
+    flex: 0 0 75%;
+    max-width: 75%;
+    box-sizing: border-box;
+  }
+
+  /* Review form */
+  .review-form-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .review-form-label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 14px;
+  }
+
+  .review-rating-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+
+  .review-input,
+  .review-textarea {
+    display: block;
+    width: 100%;
+    padding: 6px 12px;
+    font-size: 14px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+  }
+
+  .review-textarea {
+    resize: vertical;
+  }
+
+  .btn-submit-review {
+    padding: 8px 18px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .review-login-msg {
+    font-size: 14px;
+    color: #495057;
+  }
+
+  .review-login-msg a {
+    color: #007bff;
+  }
+
+  .review-demo-alert {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    color: #721c24;
+    font-size: 14px;
+  }
+
+  /* Customer reviews header */
+  .customer-reviews-header {
+    margin-bottom: 16px;
+  }
+
+  .customer-reviews-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .customer-reviews-rating {
+    color: #f0ad4e;
+    font-size: 16px;
+  }
+
+  /* Individual review */
+  .review-article {
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .review-article-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .review-author {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 4px;
+  }
+
+  .review-stars {
+    color: #f0ad4e;
+    font-size: 15px;
+  }
+
+  .review-date {
+    font-size: 13px;
+    color: #6c757d;
+  }
+
+  .review-body {
+    margin-top: 12px;
+  }
+
+  .review-subject {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .review-text {
+    font-size: 14px;
+    color: #495057;
+    margin: 0;
+  }
+
+  /* ── Tablet: ≤ 768px ── */
+  @media (max-width: 768px) {
+    /* Product card: stack image above info */
+    .product-images,
+    .product-info {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    .product-info {
+      border-left: none;
+      border-top: 1px solid #dee2e6;
+    }
+
+    /* Reviews column: full width */
+    .reviews-col {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+
+  /* ── Mobile: ≤ 480px ── */
+  @media (max-width: 480px) {
+    .product-container {
+      padding: 0 10px;
+    }
+
+    .product-images,
+    .product-info {
+      padding: 14px;
+    }
+
+    .product-main-img img {
+      max-height: 260px;
+    }
+
+    .product-thumbnails img {
+      width: 48px;
+      height: 48px;
+    }
+
+    .product-title {
+      font-size: 1.2rem;
+    }
+
+    .product-price var {
+      font-size: 1.2rem;
+    }
+
+    .rate-wrap {
+      font-size: 22px;
+    }
+
+    .review-article {
+      padding: 12px;
+    }
+  }
 </style>
 
 {% block content %}
 
-<section style="padding: 40px 0; background: #f8f9fa;">
-  <div style="max-width: 1140px; margin: 0 auto; padding: 0 15px;">
+<section class="product-section">
+  <div class="product-container">
 
     <!-- PRODUCT CARD -->
-    <div style="background: #fff; border: 1px solid #dee2e6; border-radius: 6px; overflow: hidden;">
-      <div style="display: flex; flex-wrap: wrap;">
+    <div class="product-card">
+      <div class="product-card-inner">
 
         <!-- LEFT: Images -->
-        <aside style="flex: 0 0 50%; max-width: 50%; padding: 20px; box-sizing: border-box;">
-          <div style="text-align: center; margin-bottom: 12px;">
-            <img src="{{ single_product.images.url }}" style="max-width: 100%; max-height: 380px; object-fit: contain;">
+        <aside class="product-images">
+          <div class="product-main-img">
+            <img src="{{ single_product.images.url }}" alt="{{ single_product.product_name }}">
           </div>
-          <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px;">
-            <li style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <ul class="product-thumbnails">
+            <li>
               <a href="{{ single_product.images.url }}" target="mainImage">
-                <img src="{{ single_product.images.url }}" alt="Product Image" style="width: 60px; height: 60px; object-fit: cover; border: 1px solid #dee2e6; border-radius: 4px;">
+                <img src="{{ single_product.images.url }}" alt="Product Image">
               </a>
               {% for i in product_gallery %}
               <a href="{{ i.image.url }}" target="mainImage">
-                <img src="{{ i.image.url }}" alt="Product Image" style="width: 60px; height: 60px; object-fit: cover; border: 1px solid #dee2e6; border-radius: 4px;">
+                <img src="{{ i.image.url }}" alt="Product Image">
               </a>
               {% endfor %}
             </li>
@@ -39,38 +401,38 @@
         </aside>
 
         <!-- RIGHT: Product Info -->
-        <main style="flex: 0 0 50%; max-width: 50%; padding: 20px; box-sizing: border-box; border-left: 1px solid #dee2e6;">
+        <main class="product-info">
           <form action="{% url 'add_cart' single_product.id %}" method="POST">
             {% csrf_token %}
             <article>
 
-              <h2 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 10px;">{{ single_product.product_name }}</h2>
+              <h2 class="product-title">{{ single_product.product_name }}</h2>
 
               <!-- Star Rating -->
-              <div style="margin-bottom: 12px; color: #f0ad4e; font-size: 16px;">
+              <div class="product-rating">
                 <span>
                   <i class="fa fa-star{% if single_product.averageReview < 0.5 %}-o{% elif single_product.averageReview >= 0.5 and single_product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
                   <i class="fa fa-star{% if single_product.averageReview < 1.5 %}-o{% elif single_product.averageReview >= 1.5 and single_product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
                   <i class="fa fa-star{% if single_product.averageReview < 2.5 %}-o{% elif single_product.averageReview >= 2.5 and single_product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
                   <i class="fa fa-star{% if single_product.averageReview < 3.5 %}-o{% elif single_product.averageReview >= 3.5 and single_product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
                   <i class="fa fa-star{% if single_product.averageReview < 4.5 %}-o{% elif single_product.averageReview >= 4.5 and single_product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
-                  <span style="font-size: 13px; color: #6c757d; margin-left: 4px;">{{ single_product.countReview }} reviews</span>
+                  <span class="review-count">{{ single_product.countReview }} reviews</span>
                 </span>
               </div>
 
               <!-- Price -->
-              <div style="margin-bottom: 16px;">
-                <var style="font-size: 1.4rem; font-weight: 700; font-style: normal; color: #212529;">$ {{ single_product.price }}</var>
+              <div class="product-price">
+                <var>$ {{ single_product.price }}</var>
               </div>
 
-              <p style="color: #495057; margin-bottom: 16px;">{{ single_product.description }}</p>
+              <p class="product-description">{{ single_product.description }}</p>
 
-              <hr style="border: 0; border-top: 1px solid #dee2e6; margin: 16px 0;">
+              <hr class="product-divider">
 
               <!-- Color Select -->
-              <div style="margin-bottom: 16px;">
-                <h6 style="font-size: 14px; font-weight: 600; margin-bottom: 6px;">Choose Color</h6>
-                <select name="color" required style="display: block; width: 100%; padding: 6px 12px; font-size: 14px; border: 1px solid #ced4da; border-radius: 4px; background: #fff;">
+              <div class="variant-group">
+                <h6 class="variant-label">Choose Color</h6>
+                <select name="color" required class="variant-select">
                   <option value="" disabled selected>Select</option>
                   {% for i in single_product.variation_set.colors %}
                   <option value="{{ i.variation_value|lower }}">{{ i.variation_value|capfirst }}</option>
@@ -79,9 +441,9 @@
               </div>
 
               <!-- Size Select -->
-              <div style="margin-bottom: 16px;">
-                <h6 style="font-size: 14px; font-weight: 600; margin-bottom: 6px;">Select Size</h6>
-                <select name="size" required style="display: block; width: 100%; padding: 6px 12px; font-size: 14px; border: 1px solid #ced4da; border-radius: 4px; background: #fff;">
+              <div class="variant-group">
+                <h6 class="variant-label">Select Size</h6>
+                <select name="size" required class="variant-select">
                   <option value="" disabled selected>Select</option>
                   {% for i in single_product.variation_set.sizes %}
                   <option value="{{ i.variation_value|lower }}">{{ i.variation_value|capfirst }}</option>
@@ -89,12 +451,12 @@
                 </select>
               </div>
 
-              <hr style="border: 0; border-top: 1px solid #dee2e6; margin: 16px 0;">
+              <hr class="product-divider">
 
               {% if single_product.stock <= 0 %}
-              <h5 style="color: #dc3545; font-size: 1rem;">Out of Stock</h5>
+              <h5 class="out-of-stock">Out of Stock</h5>
               {% else %}
-              <button type="submit" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: #007bff; color: #fff; border: none; border-radius: 4px; font-size: 15px; cursor: pointer;">
+              <button type="submit" class="btn-add-cart">
                 <span>Add to Cart</span>
                 <i class="fa fa-shopping-cart"></i>
               </button>
@@ -108,18 +470,16 @@
     </div>
     <!-- END PRODUCT CARD -->
 
-    <br>
-
-    <div style="display: flex; flex-wrap: wrap; gap: 24px;">
-      <div style="flex: 0 0 75%; max-width: 75%; box-sizing: border-box;">
+    <div class="reviews-layout">
+      <div class="reviews-col">
 
         <!-- REVIEW FORM -->
         <form action="{% url 'submit_review' single_product.id %}" method="POST">
           {% csrf_token %}
-          <h5 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 16px;">Write Your Review</h5>
+          <h5 class="review-form-title">Write Your Review</h5>
 
           <div>
-            <label style="display: block; margin-bottom: 8px; font-size: 14px;">How do you rate this product?</label>
+            <label class="review-rating-label">How do you rate this product?</label>
 
             <!-- Star Rating Input -->
             <div class="rate-wrap" style="margin-bottom: 12px;">
@@ -135,19 +495,19 @@
               <input type="radio" name="rating" id="rating1"  value="0.5"><label for="rating1" title="0.5">½</label>
             </div>
 
-            <label style="display: block; margin-bottom: 4px; font-size: 14px;">Review Title:</label>
-            <input type="text" name="subject" style="display: block; width: 100%; padding: 6px 12px; font-size: 14px; border: 1px solid #ced4da; border-radius: 4px; margin-bottom: 12px; box-sizing: border-box;">
+            <label class="review-form-label">Review Title:</label>
+            <input type="text" name="subject" class="review-input">
 
-            <label style="display: block; margin-bottom: 4px; font-size: 14px;">Review:</label>
-            <textarea name="review" rows="4" style="display: block; width: 100%; padding: 6px 12px; font-size: 14px; border: 1px solid #ced4da; border-radius: 4px; margin-bottom: 12px; box-sizing: border-box; resize: vertical;"></textarea>
+            <label class="review-form-label">Review:</label>
+            <textarea name="review" rows="4" class="review-textarea"></textarea>
 
             {% if user.is_authenticated %}
-              <input type="submit" value="Submit Review" style="padding: 8px 18px; background: #007bff; color: #fff; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;">
+              <input type="submit" value="Submit Review" class="btn-submit-review">
             {% else %}
-              <p style="font-size: 14px; color: #495057;">You must be logged in to post a review. <a href="{% url 'login' %}" style="color: #007bff;">Login now</a></p>
+              <p class="review-login-msg">You must be logged in to post a review. <a href="{% url 'login' %}">Login now</a></p>
             {% endif %}
 
-            <div style="margin-top: 12px; padding: 12px 16px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px; color: #721c24; font-size: 14px;" role="alert">
+            <div class="review-demo-alert" role="alert">
               2-Factor Review Submission is disabled for demo purpose.
             </div>
 
@@ -159,9 +519,9 @@
         <br>
 
         <!-- CUSTOMER REVIEWS HEADER -->
-        <header style="margin-bottom: 16px;">
-          <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 8px;">Customer Reviews</h3>
-          <div style="color: #f0ad4e; font-size: 16px;">
+        <header class="customer-reviews-header">
+          <h3 class="customer-reviews-title">Customer Reviews</h3>
+          <div class="customer-reviews-rating">
             <span>
               <i class="fa fa-star{% if single_product.averageReview < 0.5 %}-o{% elif single_product.averageReview >= 0.5 and single_product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
               <i class="fa fa-star{% if single_product.averageReview < 1.5 %}-o{% elif single_product.averageReview >= 1.5 and single_product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
@@ -175,11 +535,11 @@
 
         <!-- INDIVIDUAL REVIEWS -->
         {% for review in reviews %}
-        <article style="background: #fff; border: 1px solid #dee2e6; border-radius: 6px; padding: 16px; margin-bottom: 16px;">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+        <article class="review-article">
+          <div class="review-article-header">
             <div>
-              <h6 style="font-size: 15px; font-weight: 600; margin: 0 0 4px;">{{ review.user.full_name }}</h6>
-              <div style="color: #f0ad4e; font-size: 15px;">
+              <h6 class="review-author">{{ review.user.full_name }}</h6>
+              <div class="review-stars">
                 <span>
                   <i class="fa fa-star{% if review.rating == 0.5 %}-half-o{% elif review.rating < 1 %}-o {% endif %}" aria-hidden="true"></i>
                   <i class="fa fa-star{% if review.rating == 1.5 %}-half-o{% elif review.rating < 2 %}-o {% endif %}" aria-hidden="true"></i>
@@ -189,11 +549,11 @@
                 </span>
               </div>
             </div>
-            <span style="font-size: 13px; color: #6c757d;">{{ review.updated_at }}</span>
+            <span class="review-date">{{ review.updated_at }}</span>
           </div>
-          <div style="margin-top: 12px;">
-            <h6 style="font-size: 14px; font-weight: 600; margin-bottom: 6px;">{{ review.subject }}</h6>
-            <p style="font-size: 14px; color: #495057; margin: 0;">{{ review.review }}</p>
+          <div class="review-body">
+            <h6 class="review-subject">{{ review.subject }}</h6>
+            <p class="review-text">{{ review.review }}</p>
           </div>
         </article>
         {% endfor %}
