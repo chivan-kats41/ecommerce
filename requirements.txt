@@ -22,3 +22,5 @@ sqlparse
 urllib3>=2.0.0
 dj-database-url
 gunicorn
+cloudinary
+django-cloudinary-storage
