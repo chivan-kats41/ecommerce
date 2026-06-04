@@ -1,74 +1,154 @@
 {% extends 'base.html' %}
-
 {% block content %}
+<style>
+  .register-section {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
 
-<section style="padding-top: 40px; padding-bottom: 40px;">
+  .register-card {
+    max-width: 520px;
+    margin: 40px auto;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
 
-  <div style="max-width: 520px; margin: 40px auto; border: 1px solid #dee2e6; border-radius: 6px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.07);">
-    <article style="padding: 24px 32px;">
+  .register-body {
+    padding: 24px 32px;
+  }
 
+  .register-header {
+    margin-bottom: 24px;
+  }
+
+  .register-header h4 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 4px;
+  }
+
+  .form-group {
+    flex: 1;
+    margin-bottom: 16px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+  }
+
+  .register-submit {
+    margin-bottom: 16px;
+  }
+
+  .register-submit button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0d6efd;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .register-submit button:hover {
+    background-color: #0b5ed7;
+  }
+
+  .register-login-link {
+    text-align: center;
+    margin-top: 16px;
+  }
+
+  /* Mobile */
+  @media (max-width: 575px) {
+    .register-card {
+      margin: 20px 12px;
+    }
+
+    .register-body {
+      padding: 20px 16px;
+    }
+
+    /* Stack all field pairs vertically */
+    .form-row {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+  }
+</style>
+
+<section class="register-section">
+  <div class="register-card">
+    <article class="register-body">
       {% include 'includes/alerts.html' %}
-
-      <header style="margin-bottom: 24px;">
-        <h4 style="margin: 0; font-size: 1.25rem; font-weight: 600;">Sign up</h4>
+      <header class="register-header">
+        <h4>Sign up</h4>
       </header>
-
       <form action="{% url 'register' %}" method="POST">
         {% csrf_token %}
 
-        <!-- First name / Last name row -->
-        <div style="display: flex; gap: 16px; margin-bottom: 4px;">
-          <div style="flex: 1; margin-bottom: 16px;">
-            <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">First name</label>
+        <!-- First name / Last name -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>First name</label>
             {{ form.first_name }}
           </div>
-          <div style="flex: 1; margin-bottom: 16px;">
-            <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">Last name</label>
+          <div class="form-group">
+            <label>Last name</label>
             {{ form.last_name }}
           </div>
         </div>
 
-        <!-- Email / Phone row -->
-        <div style="display: flex; gap: 16px; margin-bottom: 4px;">
-          <div style="flex: 1; margin-bottom: 16px;">
-            <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">Email Address</label>
+        <!-- Email / Phone -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email Address</label>
             {{ form.email }}
           </div>
-          <div style="flex: 1; margin-bottom: 16px;">
-            <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">Phone Number</label>
+          <div class="form-group">
+            <label>Phone Number</label>
             {{ form.phone_number }}
           </div>
         </div>
 
-        <!-- Password / Confirm Password row -->
-        <div style="display: flex; gap: 16px; margin-bottom: 4px;">
-          <div style="flex: 1; margin-bottom: 16px;">
-            <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">Create password</label>
+        <!-- Password / Confirm Password -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Create password</label>
             {{ form.password }}
           </div>
-          <div style="flex: 1; margin-bottom: 16px;">
-            <label style="display: block; margin-bottom: 4px; font-size: 0.9rem;">Repeat password</label>
+          <div class="form-group">
+            <label>Repeat password</label>
             {{ form.confirm_password }}
           </div>
         </div>
 
-        <!-- Submit button -->
-        <div style="margin-bottom: 16px;">
-          <button type="submit" style="width: 100%; padding: 10px; background-color: #0d6efd; color: #fff; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer;">
-            Register
-          </button>
+        <!-- Submit -->
+        <div class="register-submit">
+          <button type="submit">Register</button>
         </div>
 
         {{ form.email.errors }}
         {{ form.non_field_errors }}
-
       </form>
     </article>
   </div>
-
-  <p style="text-align: center; margin-top: 16px;">Have an account? <a href="{% url 'login' %}">Log In</a></p>
+  <p class="register-login-link">Have an account? <a href="{% url 'login' %}">Log In</a></p>
   <br><br>
-
 </section>
-
 {% endblock %}
