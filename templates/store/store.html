@@ -3,8 +3,112 @@
 
 {% block content %}
 
+<style>
+  /* ── Responsive overrides ── */
+
+  .store-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  /* Sidebar */
+  .store-sidebar {
+    flex: 0 0 220px;
+    max-width: 220px;
+    box-sizing: border-box;
+  }
+
+  /* Main content area */
+  .store-main {
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  /* Product grid – 3 columns by default */
+  .product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .product-card {
+    flex: 0 0 calc(33.333% - 14px);
+    max-width: calc(33.333% - 14px);
+    box-sizing: border-box;
+  }
+
+  /* ── Tablet  (≤ 900 px) – 2-column grid, sidebar collapses to top bar ── */
+  @media (max-width: 900px) {
+    .store-wrapper {
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .store-sidebar {
+      flex: 0 0 auto;
+      max-width: 100%;
+      width: 100%;
+    }
+
+    /* Lay sidebar categories out horizontally */
+    .store-sidebar ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    .store-sidebar ul li {
+      margin-bottom: 0 !important;
+    }
+
+    .product-card {
+      flex: 0 0 calc(50% - 10px);
+      max-width: calc(50% - 10px);
+    }
+  }
+
+  /* ── Mobile (≤ 540 px) – 1-column grid ── */
+  @media (max-width: 540px) {
+    .product-card {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    .product-grid {
+      gap: 16px;
+    }
+
+    /* Page-top heading */
+    .page-top h2 {
+      font-size: 1.2rem !important;
+    }
+
+    /* Pagination wraps nicely */
+    .pagination-list {
+      gap: 6px !important;
+    }
+  }
+
+  /* ── Large screens (≥ 1280 px) – 4-column grid ── */
+  @media (min-width: 1280px) {
+    .product-card {
+      flex: 0 0 calc(25% - 15px);
+      max-width: calc(25% - 15px);
+    }
+  }
+
+  /* Product image hover */
+  .product-img:hover {
+    transform: scale(1.04);
+  }
+</style>
+
 <!-- PAGE TOP -->
-<section style="padding: 20px 0; background: #f8f9fa; border-bottom: 1px solid #dee2e6;">
+<section class="page-top" style="padding: 20px 0; background: #f8f9fa; border-bottom: 1px solid #dee2e6;">
   <div style="max-width: 1140px; margin: 0 auto; padding: 0 15px;">
     {% if 'search' in request.path %}
       <h2 style="font-size: 1.5rem; font-weight: 600; margin: 0;">Search Result</h2>
@@ -18,10 +122,10 @@
 <section style="padding: 40px 0;">
   <div style="max-width: 1140px; margin: 0 auto; padding: 0 15px;">
 
-    <div style="display: flex; flex-wrap: wrap; gap: 24px;">
+    <div class="store-wrapper">
 
       <!-- SIDEBAR -->
-      <aside style="flex: 0 0 220px; max-width: 220px; box-sizing: border-box;">
+      <aside class="store-sidebar">
         <div style="background: #fff; border: 1px solid #dee2e6; border-radius: 6px; overflow: hidden;">
           <div>
             <header style="padding: 12px 16px; background: #f8f9fa; border-bottom: 1px solid #dee2e6;">
@@ -48,7 +152,7 @@
       </aside>
 
       <!-- PRODUCTS MAIN -->
-      <main style="flex: 1; min-width: 0; box-sizing: border-box;">
+      <main class="store-main">
 
         <!-- Items count bar -->
         <header style="border-bottom: 1px solid #dee2e6; margin-bottom: 24px; padding-bottom: 12px;">
@@ -58,14 +162,14 @@
         </header>
 
         <!-- Product Grid -->
-        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+        <div class="product-grid">
           {% if products %}
             {% for product in products %}
-            <div style="flex: 0 0 calc(33.333% - 14px); max-width: calc(33.333% - 14px); box-sizing: border-box;">
+            <div class="product-card">
               <figure style="background: #fff; border: 1px solid #dee2e6; border-radius: 6px; overflow: hidden; margin: 0;">
                 <div style="overflow: hidden; background: #f8f9fa;">
                   <a href="{{ product.get_url }}">
-                    <img src="{{ product.images.url }}" alt="{{ product.product_name }}"
+                    <img class="product-img" src="{{ product.images.url }}" alt="{{ product.product_name }}"
                          style="width: 100%; height: 200px; object-fit: cover; display: block; transition: transform 0.2s;">
                   </a>
                 </div>
@@ -97,7 +201,7 @@
         <!-- Pagination -->
         <nav style="margin-top: 32px;" aria-label="Page navigation">
           {% if products.has_other_pages %}
-          <ul style="display: flex; flex-wrap: wrap; gap: 4px; list-style: none; margin: 0; padding: 0;">
+          <ul class="pagination-list" style="display: flex; flex-wrap: wrap; gap: 4px; list-style: none; margin: 0; padding: 0;">
 
             {% if products.has_previous %}
             <li>
