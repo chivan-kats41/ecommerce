@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'admin_honeypot',
     'storages',
     'pages',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -159,33 +160,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-
-# STATIC_URL = '/static/'
-# STATIC_ROOT = BASE_DIR /'static'
-# STATICFILES_DIRS = [
-#     'ecommerce/static',
-# ]
-'''
-# AWS S3 Static Files Configuration
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET'),
 }
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = 'public-read'
-AWS_LOCATION = 'static'
-'''
 
-# In settings.py, replace the AWS block with this for local dev:
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [BASE_DIR / 'ecommerce' / 'static']
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+
 
 
 from django.contrib.messages import constants as messages
