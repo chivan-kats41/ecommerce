@@ -1,111 +1,458 @@
 {% load static %}
+<style>
+  /* ── Promo Bar ── */
+  .promo-bar {
+    text-align: center;
+    background-image: linear-gradient(to right, #3167EB, #7A7A7A);
+    padding: 10px;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+
+  .promo-bar a {
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-decoration: none;
+    font-size: 13px;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+
+  .header-inner-section {
+    padding: 12px 0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  .header-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* Logo */
+  .header-logo {
+    flex: 0 0 auto;
+    width: 160px;
+  }
+
+  .header-logo img {
+    max-height: 50px;
+    width: auto;
+  }
+
+  /* Category dropdown */
+  .header-category {
+    flex: 0 0 auto;
+    position: relative;
+  }
+
+  .category-btn {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .category-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-width: 180px;
+    z-index: 999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .category-dropdown a {
+    display: block;
+    padding: 8px 16px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .category-dropdown a:hover {
+    background: #f8f9fa;
+  }
+
+  /* Store button */
+  .header-store-btn {
+    flex: 0 0 auto;
+    padding: 7px 16px;
+    border: 1px solid #007bff;
+    color: #007bff;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .header-store-btn:hover {
+    background: #007bff;
+    color: #fff;
+  }
+
+  /* Search */
+  .header-search {
+    flex: 1 1 200px;
+    min-width: 150px;
+  }
+
+  .header-search form {
+    display: flex;
+    width: 100%;
+  }
+
+  .header-search input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    font-size: 14px;
+    outline: none;
+  }
+
+  .header-search button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  /* User + cart */
+  .header-actions {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: auto;
+  }
+
+  .header-welcome {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .header-welcome small {
+    color: #999;
+  }
+
+  .header-welcome a {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .header-welcome span {
+    color: #ccc;
+    margin: 0 4px;
+  }
+
+  .header-cart {
+    position: relative;
+    text-decoration: none;
+    color: #333;
+  }
+
+  .cart-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #dc3545;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── Mobile hamburger ── */
+  .mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #333;
+    padding: 4px 8px;
+    margin-left: auto;
+  }
+
+  /* ── Tablet (≤ 900px): hide store btn, shrink gap ── */
+  @media (max-width: 900px) {
+    .header-store-btn {
+      display: none;
+    }
+
+    .promo-bar a {
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+  }
+
+  /* ── Mobile (≤ 600px) ── */
+  @media (max-width: 600px) {
+    .header-row {
+      flex-wrap: nowrap;
+      align-items: center;
+    }
+
+    /* Show hamburger, hide category btn + welcome text */
+    .mobile-menu-toggle  { display: block; }
+    .header-category     { display: none; }
+    .header-welcome      { display: none; }
+
+    /* Search full-width on second row */
+    .header-search {
+      display: none;
+      width: 100%;
+      flex: 1 1 100%;
+      order: 10;
+    }
+
+    .header-search.open {
+      display: flex;
+    }
+
+    /* Logo smaller */
+    .header-logo {
+      width: 110px;
+    }
+
+    .header-logo img {
+      max-height: 38px;
+    }
+
+    /* Actions: search toggle + cart only */
+    .header-actions {
+      gap: 10px;
+      margin-left: auto;
+    }
+
+    /* Search toggle button (mobile only) */
+    .search-toggle {
+      display: flex;
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: #333;
+      padding: 4px;
+    }
+
+    /* Mobile nav drawer */
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      background: #fff;
+      border-top: 1px solid #e0e0e0;
+      padding: 8px 15px 16px;
+    }
+
+    .mobile-nav.open {
+      display: flex;
+    }
+
+    .mobile-nav a {
+      padding: 10px 0;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .mobile-nav a:last-child {
+      border-bottom: none;
+    }
+
+    .mobile-nav .mobile-auth {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      font-size: 14px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .mobile-nav .mobile-auth a {
+      border: none;
+      padding: 0;
+      color: #007bff;
+    }
+  }
+
+  /* Hide search toggle on desktop */
+  @media (min-width: 601px) {
+    .search-toggle { display: none; }
+    .mobile-nav    { display: none !important; }
+  }
+</style>
 
 <!-- Promo Bar -->
-<div style="text-align:center; background-image: linear-gradient(to right, #3167EB, #7A7A7A); padding: 10px; font-weight: 600; position: sticky; top: 0; z-index: 999;">
-  <a href="https://www.udemy.com/course/django-ecommerce-project-based-course-python-django-web-development/?couponCode=DJECOM"
-     style="color: white; text-transform: uppercase; letter-spacing: 2px; text-decoration: none;">
+<div class="promo-bar">
+  <a href="https://www.udemy.com/course/django-ecommerce-project-based-course-python-django-web-development/?couponCode=DJECOM">
     <span>&#x1F525;</span> Purchase Full Course on CyberTech Academy | Upto 95% Discount <span>&#x1F525;</span>
   </a>
 </div>
 
 <!-- Header -->
-<header style="background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">
-
-  <section style="padding: 12px 0; border-bottom: 1px solid #e0e0e0;">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 0 15px;">
-      <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px;">
+<header class="site-header">
+  <section class="header-inner-section">
+    <div class="header-container">
+      <div class="header-row">
 
         <!-- Logo -->
-        <div style="flex: 0 0 auto; width: 160px;">
-          <a href="{% url 'home' %}" style="display: inline-block;">
-            <img src="{% static './images/logo1111.png' %}" style="max-height: 50px; width: auto;">
+        <div class="header-logo">
+          <a href="{% url 'home' %}">
+            <img src="{% static './images/logo1111.png' %}" alt="CyberKarts">
           </a>
         </div>
 
-        <!-- Category Dropdown -->
-        <div style="flex: 0 0 auto; position: relative;">
-          <button type="button"
-                  onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block'"
-                  style="background: #007bff; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px;">
+        <!-- Category Dropdown (hidden on mobile) -->
+        <div class="header-category">
+          <button class="category-btn" type="button"
+                  onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block'">
             &#9776; All category
           </button>
-          <div id="category-dropdown"
-               style="display: none; position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid #ddd; border-radius: 4px; min-width: 180px; z-index: 999; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-            <a href="{% url 'store' %}" style="display: block; padding: 8px 16px; color: #333; text-decoration: none; font-size: 14px; border-bottom: 1px solid #f0f0f0;">All Products</a>
+          <div id="category-dropdown" class="category-dropdown">
+            <a href="{% url 'store' %}">All Products</a>
             {% for category in links %}
-              <a href="{{ category.get_url }}" style="display: block; padding: 8px 16px; color: #333; text-decoration: none; font-size: 14px; border-bottom: 1px solid #f0f0f0;">{{ category.category_name }}</a>
+              <a href="{{ category.get_url }}">{{ category.category_name }}</a>
             {% endfor %}
           </div>
         </div>
 
-        <!-- Store Button -->
-        <a href="{% url 'store' %}"
-           style="flex: 0 0 auto; padding: 7px 16px; border: 1px solid #007bff; color: #007bff; border-radius: 4px; text-decoration: none; font-size: 14px;">
-          Store
-        </a>
+        <!-- Store Button (hidden on tablet/mobile) -->
+        <a href="{% url 'store' %}" class="header-store-btn">Store</a>
 
-        <!-- Search Bar -->
-        <div style="flex: 1 1 200px; min-width: 150px;">
-          <form action="{% url 'search' %}" method="GET" style="display: flex; width: 100%;">
-            <input type="text"
-                   name="keyword"
-                   required
-                   placeholder="Search"
-                   style="flex: 1; padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px 0 0 4px; font-size: 14px; outline: none;">
-            <button type="submit"
-                    style="background: #007bff; color: #fff; border: none; padding: 8px 14px; border-radius: 0 4px 4px 0; cursor: pointer; font-size: 14px;">
-              &#128269;
-            </button>
+        <!-- Search Bar (hidden on mobile, shown via toggle) -->
+        <div class="header-search" id="header-search">
+          <form action="{% url 'search' %}" method="GET">
+            <input type="text" name="keyword" required placeholder="Search">
+            <button type="submit">&#128269;</button>
           </form>
         </div>
 
         <!-- User & Cart -->
-        <div style="flex: 0 0 auto; display: flex; align-items: center; gap: 16px; margin-left: auto;">
+        <div class="header-actions">
 
-          <!-- Welcome / Auth -->
+          <!-- Search toggle (mobile only) -->
+          <button class="search-toggle" id="search-toggle" title="Search">&#128269;</button>
+
+          <!-- Welcome / Auth (hidden on mobile — shown in drawer) -->
           {% if user.id is None %}
-          <div style="display: flex; flex-direction: column; font-size: 13px; line-height: 1.4;">
-            <small style="color: #999;">Welcome guest!</small>
+          <div class="header-welcome">
+            <small>Welcome guest!</small>
             <div>
-              <a href="{% url 'login' %}" style="color: #007bff; text-decoration: none;">Sign in</a>
-              <span style="color: #ccc; margin: 0 4px;">|</span>
-              <a href="{% url 'register' %}" style="color: #007bff; text-decoration: none;">Register</a>
+              <a href="{% url 'login' %}">Sign in</a>
+              <span>|</span>
+              <a href="{% url 'register' %}">Register</a>
             </div>
           </div>
           {% else %}
-          <div style="display: flex; flex-direction: column; font-size: 13px; line-height: 1.4;">
-            <small style="color: #999;">Welcome {{ user.first_name }}!</small>
+          <div class="header-welcome">
+            <small>Welcome {{ user.first_name }}!</small>
             <div>
-              <a href="{% url 'dashboard' %}" style="color: #007bff; text-decoration: none;">Dashboard</a>
-              <span style="color: #ccc; margin: 0 4px;">|</span>
-              <a href="{% url 'logout' %}" style="color: #007bff; text-decoration: none;">Logout</a>
+              <a href="{% url 'dashboard' %}">Dashboard</a>
+              <span>|</span>
+              <a href="{% url 'logout' %}">Logout</a>
             </div>
           </div>
           {% endif %}
 
-          <!-- Cart Icon -->
-          <a href="{% url 'cart' %}" style="position: relative; text-decoration: none; color: #333;">
-            <div style="width: 38px; height: 38px; border-radius: 50%; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; font-size: 16px;">
-              &#128722;
-            </div>
-            <span style="position: absolute; top: -6px; right: -6px; background: #dc3545; color: #fff; font-size: 10px; font-weight: 700; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center;">
-              {{ cart_count }}
-            </span>
+          <!-- Cart -->
+          <a href="{% url 'cart' %}" class="header-cart">
+            <div class="cart-icon">&#128722;</div>
+            <span class="cart-badge">{{ cart_count }}</span>
           </a>
+
+          <!-- Hamburger (mobile only) -->
+          <button class="mobile-menu-toggle" id="mobile-menu-toggle" title="Menu">&#9776;</button>
 
         </div>
       </div>
     </div>
-  </section>
 
+    <!-- Mobile Nav Drawer -->
+    <nav class="mobile-nav" id="mobile-nav">
+      <a href="{% url 'store' %}">&#x1F6CD; Store</a>
+      {% for category in links %}
+        <a href="{{ category.get_url }}">{{ category.category_name }}</a>
+      {% endfor %}
+      {% if user.id is None %}
+      <div class="mobile-auth">
+        <a href="{% url 'login' %}">Sign in</a>
+        <a href="{% url 'register' %}">Register</a>
+      </div>
+      {% else %}
+      <div class="mobile-auth">
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      </div>
+      {% endif %}
+    </nav>
+
+  </section>
 </header>
 
-<!-- Close dropdown when clicking outside -->
 <script>
+  // Close category dropdown when clicking outside
   document.addEventListener('click', function(e) {
     var dropdown = document.getElementById('category-dropdown');
     if (dropdown && !e.target.closest('[onclick]')) {
       dropdown.style.display = 'none';
     }
+  });
+
+  // Hamburger toggle
+  document.getElementById('mobile-menu-toggle').addEventListener('click', function(e) {
+    e.stopPropagation();
+    document.getElementById('mobile-nav').classList.toggle('open');
+  });
+
+  // Search toggle (mobile)
+  document.getElementById('search-toggle').addEventListener('click', function(e) {
+    e.stopPropagation();
+    var search = document.getElementById('header-search');
+    search.classList.toggle('open');
   });
 </script>
