@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block content %}
 <style>
   /* ===== Star rating widget ===== */
   .rate-wrap input[type="radio"] { display: none; }
@@ -14,6 +15,7 @@
     justify-content: flex-end;
     font-size: 28px;
     gap: 2px;
+    margin-bottom: 12px;
   }
 
   /* ===== Layout ===== */
@@ -82,6 +84,12 @@
     object-fit: cover;
     border: 1px solid #dee2e6;
     border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+
+  .product-thumbnails img:hover {
+    border-color: #007bff;
   }
 
   /* Right: product info */
@@ -125,6 +133,7 @@
   .product-description {
     color: #495057;
     margin-bottom: 16px;
+    line-height: 1.6;
   }
 
   .product-divider {
@@ -162,16 +171,24 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 20px;
+    padding: 10px 24px;
     background: #007bff;
     color: #fff;
     border: none;
     border-radius: 4px;
     font-size: 15px;
+    font-weight: 500;
     cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
   }
 
-  /* ===== Review & customer reviews layout ===== */
+  .btn-add-cart:hover {
+    background: #0056b3;
+    color: #fff;
+  }
+
+  /* ===== Reviews layout ===== */
   .reviews-layout {
     display: flex;
     flex-wrap: wrap;
@@ -215,9 +232,7 @@
     box-sizing: border-box;
   }
 
-  .review-textarea {
-    resize: vertical;
-  }
+  .review-textarea { resize: vertical; }
 
   .btn-submit-review {
     padding: 8px 18px;
@@ -227,16 +242,17 @@
     border-radius: 4px;
     font-size: 14px;
     cursor: pointer;
+    transition: background 0.2s;
   }
+
+  .btn-submit-review:hover { background: #0056b3; }
 
   .review-login-msg {
     font-size: 14px;
     color: #495057;
   }
 
-  .review-login-msg a {
-    color: #007bff;
-  }
+  .review-login-msg a { color: #007bff; }
 
   .review-demo-alert {
     margin-top: 12px;
@@ -249,9 +265,7 @@
   }
 
   /* Customer reviews header */
-  .customer-reviews-header {
-    margin-bottom: 16px;
-  }
+  .customer-reviews-header { margin-bottom: 16px; }
 
   .customer-reviews-title {
     font-size: 1.2rem;
@@ -297,9 +311,7 @@
     color: #6c757d;
   }
 
-  .review-body {
-    margin-top: 12px;
-  }
+  .review-body { margin-top: 12px; }
 
   .review-subject {
     font-size: 14px;
@@ -313,9 +325,42 @@
     margin: 0;
   }
 
-  /* ── Tablet: ≤ 768px ── */
+  /* ══════════════════════════════════════════
+     RESPONSIVE BREAKPOINTS
+  ══════════════════════════════════════════ */
+
+  /* ── Large desktops (≥ 1400px) ── */
+  @media (min-width: 1400px) {
+    .product-container {
+      max-width: 1320px;
+    }
+
+    .product-main-img img {
+      max-height: 460px;
+    }
+
+    .product-title {
+      font-size: 1.75rem;
+    }
+
+    .product-price var {
+      font-size: 1.6rem;
+    }
+  }
+
+  /* ── Standard desktop (1140px – 1399px) — default styles apply ── */
+
+  /* ── Tablet landscape (≤ 1024px) ── */
+  @media (max-width: 1024px) {
+    .reviews-col {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+
+  /* ── Tablet portrait (≤ 768px) ── */
   @media (max-width: 768px) {
-    /* Product card: stack image above info */
+    /* Stack product image above info */
     .product-images,
     .product-info {
       flex: 0 0 100%;
@@ -327,26 +372,62 @@
       border-top: 1px solid #dee2e6;
     }
 
-    /* Reviews column: full width */
+    .product-main-img img {
+      max-height: 320px;
+    }
+
     .reviews-col {
       flex: 0 0 100%;
       max-width: 100%;
     }
+
+    .btn-add-cart {
+      width: 100%;
+      justify-content: center;
+    }
   }
 
-  /* ── Mobile: ≤ 480px ── */
-  @media (max-width: 480px) {
+  /* ── Large mobile (≤ 600px) ── */
+  @media (max-width: 600px) {
+    .product-section {
+      padding: 24px 0;
+    }
+
     .product-container {
-      padding: 0 10px;
+      padding: 0 12px;
     }
 
     .product-images,
     .product-info {
+      padding: 16px;
+    }
+
+    .product-title {
+      font-size: 1.25rem;
+    }
+
+    .product-price var {
+      font-size: 1.25rem;
+    }
+
+    .rate-wrap {
+      font-size: 24px;
+    }
+
+    .review-article {
       padding: 14px;
+    }
+  }
+
+  /* ── Small mobile (≤ 480px) ── */
+  @media (max-width: 480px) {
+    .product-images,
+    .product-info {
+      padding: 12px;
     }
 
     .product-main-img img {
-      max-height: 260px;
+      max-height: 240px;
     }
 
     .product-thumbnails img {
@@ -355,24 +436,59 @@
     }
 
     .product-title {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
 
     .product-price var {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
 
     .rate-wrap {
-      font-size: 22px;
+      font-size: 20px;
     }
 
     .review-article {
-      padding: 12px;
+      padding: 10px;
+    }
+
+    .review-article-header {
+      flex-direction: column;
+    }
+
+    .review-date {
+      align-self: flex-start;
+    }
+  }
+
+  /* ── Extra small (≤ 360px) ── */
+  @media (max-width: 360px) {
+    .product-container {
+      padding: 0 8px;
+    }
+
+    .product-images,
+    .product-info {
+      padding: 10px;
+    }
+
+    .product-main-img img {
+      max-height: 200px;
+    }
+
+    .product-title {
+      font-size: 1rem;
+    }
+
+    .btn-add-cart {
+      font-size: 14px;
+      padding: 9px 16px;
+    }
+
+    .rate-wrap {
+      font-size: 18px;
     }
   }
 </style>
-
-{% block content %}
 
 <section class="product-section">
   <div class="product-container">
@@ -384,15 +500,15 @@
         <!-- LEFT: Images -->
         <aside class="product-images">
           <div class="product-main-img">
-            <img src="{{ single_product.images.url }}" alt="{{ single_product.product_name }}">
+            <img src="{{ single_product.images.url }}" alt="{{ single_product.product_name }}" class="mainImage">
           </div>
           <ul class="product-thumbnails">
             <li>
-              <a href="{{ single_product.images.url }}" target="mainImage">
+              <a href="{{ single_product.images.url }}" class="thumb">
                 <img src="{{ single_product.images.url }}" alt="Product Image">
               </a>
               {% for i in product_gallery %}
-              <a href="{{ i.image.url }}" target="mainImage">
+              <a href="{{ i.image.url }}" class="thumb">
                 <img src="{{ i.image.url }}" alt="Product Image">
               </a>
               {% endfor %}
@@ -408,19 +524,17 @@
 
               <h2 class="product-title">{{ single_product.product_name }}</h2>
 
-              <!-- Star Rating -->
               <div class="product-rating">
                 <span>
-                  <i class="fa fa-star{% if single_product.averageReview < 0.5 %}-o{% elif single_product.averageReview >= 0.5 and single_product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
-                  <i class="fa fa-star{% if single_product.averageReview < 1.5 %}-o{% elif single_product.averageReview >= 1.5 and single_product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
-                  <i class="fa fa-star{% if single_product.averageReview < 2.5 %}-o{% elif single_product.averageReview >= 2.5 and single_product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
-                  <i class="fa fa-star{% if single_product.averageReview < 3.5 %}-o{% elif single_product.averageReview >= 3.5 and single_product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
-                  <i class="fa fa-star{% if single_product.averageReview < 4.5 %}-o{% elif single_product.averageReview >= 4.5 and single_product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 0.5 %}-o{% elif single_product.averageReview >= 0.5 and single_product.averageReview < 1 %}-half-o{% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 1.5 %}-o{% elif single_product.averageReview >= 1.5 and single_product.averageReview < 2 %}-half-o{% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 2.5 %}-o{% elif single_product.averageReview >= 2.5 and single_product.averageReview < 3 %}-half-o{% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 3.5 %}-o{% elif single_product.averageReview >= 3.5 and single_product.averageReview < 4 %}-half-o{% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 4.5 %}-o{% elif single_product.averageReview >= 4.5 and single_product.averageReview < 5 %}-half-o{% endif %}" aria-hidden="true"></i>
                   <span class="review-count">{{ single_product.countReview }} reviews</span>
                 </span>
               </div>
 
-              <!-- Price -->
               <div class="product-price">
                 <var>$ {{ single_product.price }}</var>
               </div>
@@ -429,7 +543,6 @@
 
               <hr class="product-divider">
 
-              <!-- Color Select -->
               <div class="variant-group">
                 <h6 class="variant-label">Choose Color</h6>
                 <select name="color" required class="variant-select">
@@ -440,7 +553,6 @@
                 </select>
               </div>
 
-              <!-- Size Select -->
               <div class="variant-group">
                 <h6 class="variant-label">Select Size</h6>
                 <select name="size" required class="variant-select">
@@ -481,8 +593,7 @@
           <div>
             <label class="review-rating-label">How do you rate this product?</label>
 
-            <!-- Star Rating Input -->
-            <div class="rate-wrap" style="margin-bottom: 12px;">
+            <div class="rate-wrap">
               <input type="radio" name="rating" id="rating10" value="5" required><label for="rating10" title="5">★</label>
               <input type="radio" name="rating" id="rating9"  value="4.5"><label for="rating9"  title="4.5">½</label>
               <input type="radio" name="rating" id="rating8"  value="4"><label for="rating8"   title="4">★</label>
@@ -510,7 +621,6 @@
             <div class="review-demo-alert" role="alert">
               2-Factor Review Submission is disabled for demo purpose.
             </div>
-
           </div>
 
           {% include 'includes/alerts.html' %}
@@ -523,11 +633,11 @@
           <h3 class="customer-reviews-title">Customer Reviews</h3>
           <div class="customer-reviews-rating">
             <span>
-              <i class="fa fa-star{% if single_product.averageReview < 0.5 %}-o{% elif single_product.averageReview >= 0.5 and single_product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
-              <i class="fa fa-star{% if single_product.averageReview < 1.5 %}-o{% elif single_product.averageReview >= 1.5 and single_product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
-              <i class="fa fa-star{% if single_product.averageReview < 2.5 %}-o{% elif single_product.averageReview >= 2.5 and single_product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
-              <i class="fa fa-star{% if single_product.averageReview < 3.5 %}-o{% elif single_product.averageReview >= 3.5 and single_product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
-              <i class="fa fa-star{% if single_product.averageReview < 4.5 %}-o{% elif single_product.averageReview >= 4.5 and single_product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+              <i class="fa fa-star{% if single_product.averageReview < 0.5 %}-o{% elif single_product.averageReview >= 0.5 and single_product.averageReview < 1 %}-half-o{% endif %}" aria-hidden="true"></i>
+              <i class="fa fa-star{% if single_product.averageReview < 1.5 %}-o{% elif single_product.averageReview >= 1.5 and single_product.averageReview < 2 %}-half-o{% endif %}" aria-hidden="true"></i>
+              <i class="fa fa-star{% if single_product.averageReview < 2.5 %}-o{% elif single_product.averageReview >= 2.5 and single_product.averageReview < 3 %}-half-o{% endif %}" aria-hidden="true"></i>
+              <i class="fa fa-star{% if single_product.averageReview < 3.5 %}-o{% elif single_product.averageReview >= 3.5 and single_product.averageReview < 4 %}-half-o{% endif %}" aria-hidden="true"></i>
+              <i class="fa fa-star{% if single_product.averageReview < 4.5 %}-o{% elif single_product.averageReview >= 4.5 and single_product.averageReview < 5 %}-half-o{% endif %}" aria-hidden="true"></i>
               <span style="font-size: 13px; color: #6c757d; margin-left: 4px;">{{ single_product.countReview }} reviews</span>
             </span>
           </div>
@@ -540,13 +650,11 @@
             <div>
               <h6 class="review-author">{{ review.user.full_name }}</h6>
               <div class="review-stars">
-                <span>
-                  <i class="fa fa-star{% if review.rating == 0.5 %}-half-o{% elif review.rating < 1 %}-o {% endif %}" aria-hidden="true"></i>
-                  <i class="fa fa-star{% if review.rating == 1.5 %}-half-o{% elif review.rating < 2 %}-o {% endif %}" aria-hidden="true"></i>
-                  <i class="fa fa-star{% if review.rating == 2.5 %}-half-o{% elif review.rating < 3 %}-o {% endif %}" aria-hidden="true"></i>
-                  <i class="fa fa-star{% if review.rating == 3.5 %}-half-o{% elif review.rating < 4 %}-o {% endif %}" aria-hidden="true"></i>
-                  <i class="fa fa-star{% if review.rating == 4.5 %}-half-o{% elif review.rating < 5 %}-o {% endif %}" aria-hidden="true"></i>
-                </span>
+                <i class="fa fa-star{% if review.rating == 0.5 %}-half-o{% elif review.rating < 1 %}-o{% endif %}" aria-hidden="true"></i>
+                <i class="fa fa-star{% if review.rating == 1.5 %}-half-o{% elif review.rating < 2 %}-o{% endif %}" aria-hidden="true"></i>
+                <i class="fa fa-star{% if review.rating == 2.5 %}-half-o{% elif review.rating < 3 %}-o{% endif %}" aria-hidden="true"></i>
+                <i class="fa fa-star{% if review.rating == 3.5 %}-half-o{% elif review.rating < 4 %}-o{% endif %}" aria-hidden="true"></i>
+                <i class="fa fa-star{% if review.rating == 4.5 %}-half-o{% elif review.rating < 5 %}-o{% endif %}" aria-hidden="true"></i>
               </div>
             </div>
             <span class="review-date">{{ review.updated_at }}</span>
